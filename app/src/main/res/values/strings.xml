@@ -30,5 +30,6 @@
     <string name="project_title_optional">(optional)</string>
     <string name="category_optional">Category (optional)</string>
     <string name="go_to_fragment_4b">Go to Fragment 4b1</string>
-    <string name="Time">DateTime</string>
+    <string name="Time">Date and Time</string>
+    <string name="category">Category:</string>
 </resources>

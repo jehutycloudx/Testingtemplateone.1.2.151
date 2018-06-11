@@ -21,16 +21,6 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <VideoView
-        android:id="@+id/videoView2"
-        android:layout_width="184dp"
-        android:layout_height="136dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <RelativeLayout
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
@@ -45,7 +35,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.641">
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -70,8 +61,7 @@
                 android:id="@+id/title_field"
                 android:layout_width="match_parent"
                 android:layout_height="42dp"
-                android:hint="@string/project_title_optional"
-                />
+                android:hint="@string/project_title_optional" />
 
 
         </android.support.design.widget.TextInputLayout>
@@ -79,7 +69,7 @@
 
     <LinearLayout
         android:id="@+id/linearLayout3"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
@@ -97,7 +87,7 @@
 
         <Spinner
             android:id="@+id/spinner2"
-            android:layout_width="50dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginRight="190dp"
             android:layout_weight="1"
@@ -151,24 +141,6 @@
         app:layout_constraintHorizontal_bias="0.135"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <ImageView
-        android:id="@+id/bmThumbnail"
-        android:layout_width="149dp"
-        android:layout_height="123dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.957"
-        app:layout_constraintStart_toStartOf="@+id/videoView2"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.037"
-        app:srcCompat="@android:drawable/ic_media_play" />
-
     <TextView
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
@@ -183,6 +155,70 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="209dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.024">
+
+        <VideoView
+            android:id="@+id/videoView2"
+            android:layout_width="291dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center_horizontal" />
+        <!-- Always set Video view to 'android:layout_width="match_parent"', otherwise
+     it will always display video in a crammed state-->
+
+        <!-- <ImageView
+            android:id="@+id/bmThumbnail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            app:srcCompat="@android:drawable/ic_media_play" /> -->
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="250dp"
+            android:layout_height="200dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginRight="18dp"
+            android:layout_marginTop="15dp"
+            android:layout_centerInParent="true"
+
+            app:srcCompat="@android:drawable/ic_media_play" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="21dp"
+            android:layout_height="21dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/videoView2"
+            app:srcCompat="@drawable/ic_media_play_dark"
+            android:layout_alignLeft="@+id/videoView2" />
+
+        <!-- Do you need Glide or Universal Imageloader to properly display pics? -->
+        <!-- take a picture results in grainy quality and wrong aspect ratio no matter how much adjustment in XML-->
+    </RelativeLayout>
 
 
 </android.support.constraint.ConstraintLayout>

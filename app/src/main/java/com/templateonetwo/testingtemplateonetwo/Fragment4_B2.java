@@ -1,56 +1,72 @@
 package com.templateonetwo.testingtemplateonetwo;
 
 import android.app.DatePickerDialog;
-import android.app.DialogFragment;
-import android.app.Fragment;
-import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.view.ViewPager;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Spinner;
-import android.widget.TextClock;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
-import android.widget.VideoView;
 
-import org.w3c.dom.Text;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
 
-import java.sql.Time;
+
+import java.io.IOException;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
-import static android.graphics.Color.TRANSPARENT;
-
-public class Fragment4_B2 extends android.support.v4.app.Fragment implements Fragment1.OnVideoSelectedLister, Fragment1.OnPhotoSelectedLister, AdapterView.OnItemSelectedListener {
+public class Fragment4_B2 extends android.support.v4.app.Fragment implements Fragment1.OnVideoSelectedLister, Fragment1.OnPhotoSelectedLister, AdapterView.OnItemSelectedListener ,
+        View.OnClickListener, LocationListener,
+        GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener{
 
 
 
     private static final String Tag4b2 = "Fragment4_B2";
     private Button btnNavFrag4b2;
-    private Button btnNexttoReview;
+    private Button btnNexttoReview; //getAddress;
+    private ImageView getAddress;
+    EditText address;
 
-    Integer teal = 0x81ecec;
 
     public TextView mTimefield;
 
     public TextView mDatefield;
     public DatePickerDialog.OnDateSetListener mOnDateSetListener;
+
+    private static final long INTERVAL = 1000 * 10;
+    private static final long FASTEST_INTERVAL = 1000 * 5;
+    LocationRequest mLocationRequest;
+    GoogleApiClient mGoogleApiClient;
+    Location mCurrentLocation;
+   final int MY_PERMISSIONS_ACCESS_FINE_LOCATION=7;
+
 
     public Fragment4_B2() {}
 
@@ -76,6 +92,9 @@ public class Fragment4_B2 extends android.support.v4.app.Fragment implements Fra
         btnNexttoReview = (Button) view.findViewById(R.id.Next_ToReview);
         mTimefield = (TextView) view.findViewById(R.id.Timefield);
         mDatefield = (TextView) view.findViewById(R.id.Datefield);
+        getAddress =(ImageView)view.findViewById(R.id.retrievelocationButton);
+        address =(EditText)view.findViewById(R.id.editText5);
+        getAddress.setOnClickListener(this);
         mDatefield.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -174,10 +193,7 @@ public class Fragment4_B2 extends android.support.v4.app.Fragment implements Fra
 //    }
 
 
-    @Override
-    public void getVideopath(Uri data) {
 
-    }
 
     @Override
     public void getImagePath(Uri imagePath) {
@@ -185,6 +201,203 @@ public class Fragment4_B2 extends android.support.v4.app.Fragment implements Fra
 
     @Override
     public void getImageBitmap(Bitmap bitmap) {
+    }
+
+    @Override
+    public Uri setImagePath() {
+        return null;
+    }
+
+    @Override
+    public Bitmap setImageBitmap() {
+        return null;
+    }
+
+  //  @Override
+    //public Uri getImageBitmap() {
+      //  return null;     /*6/11, class code was underlined at top in red, added this method to make code work */
+    //}
+
+    @Override
+    public Uri getVideopath() {
+        return null;
+    }
+
+    @Override
+    public void setVideopath(Uri data) {
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId())
+        {
+            case R.id.retrievelocationButton:
+                checkLocationPermissions();/*this code is for location button, change the id to be more descriptive*/
+                break;
+        }
+    }
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////All code below is for location methods/callback/////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        createLocationRequest();
+        mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
+                .addApi(LocationServices.API)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .build();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        mGoogleApiClient.connect();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        mGoogleApiClient.disconnect();
+
+    }
+
+    protected void createLocationRequest() {
+        mLocationRequest = new LocationRequest();
+        mLocationRequest.setInterval(INTERVAL);
+        mLocationRequest.setFastestInterval(FASTEST_INTERVAL);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        startLocationUpdates();
+    }
+
+    protected void startLocationUpdates() {
+        PendingResult<Status> pendingResult = LocationServices.FusedLocationApi.requestLocationUpdates(
+                mGoogleApiClient, mLocationRequest, this);
+
+        /*This will need to check for permission, may be red but will still work, put in code to check
+          location permissions. */
+
+    }
+
+
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+         mCurrentLocation=location;
+    }
+
+    protected void stopLocationUpdates() {
+        LocationServices.FusedLocationApi.removeLocationUpdates(
+                mGoogleApiClient, this);
+    }
+
+    void checkLocationPermissions() {
+
+        if (ContextCompat.checkSelfPermission(getActivity(),
+                android.Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
+                    android.Manifest.permission.ACCESS_FINE_LOCATION)) {
+
+                Snackbar.make(getView(), "You need to grant permission to access location to this app to be able to fetch current location", Snackbar.LENGTH_LONG).show();
+                requestPermissions(new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                        MY_PERMISSIONS_ACCESS_FINE_LOCATION);
+
+            } else {
+                // No explanation needed, we can request the permission.
+
+                requestPermissions(new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                        MY_PERMISSIONS_ACCESS_FINE_LOCATION);
+
+                // MY_PERMISSIONS_ACCESS_FINE_LOCATIONis an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        }
+        else
+        {
+            getCurrentLocation();
+        }
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case MY_PERMISSIONS_ACCESS_FINE_LOCATION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Snackbar.make(getView(), "Getting location", Snackbar.LENGTH_LONG).show();
+                    if (mGoogleApiClient.isConnected())
+                    {
+                        startLocationUpdates();
+                    }
+                    else
+                    {
+                        mGoogleApiClient.connect();
+                    }
+                } else {
+                    Toast.makeText(getActivity(),"You cannot track the current location without giving access location permission",Toast.LENGTH_LONG).show();
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
+    }
+
+    void getCurrentLocation()
+    {
+       if(mCurrentLocation!=null)
+       {
+           Geocoder geocoder;
+           List<Address> addresses;
+           geocoder = new Geocoder(getActivity(), Locale.getDefault());
+           Toast.makeText(getActivity(),"Retrieving Location",Toast.LENGTH_LONG).show();
+           try {
+               addresses = geocoder.getFromLocation(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude(), 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+
+
+           String addressa = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+           String city = addresses.get(0).getLocality();
+           String state = addresses.get(0).getAdminArea();
+           String country = addresses.get(0).getCountryName();
+           String postalCode = addresses.get(0).getPostalCode();
+           String knownName = addresses.get(0).getFeatureName();
+           address.setText(addressa);
+           } catch (IOException e) {
+               e.printStackTrace();
+           }
+
+       }
     }
 }
 
