@@ -100,13 +100,13 @@ public  class MainActivity extends AppCompatActivity implements Fragment1.OnPhot
         /* each of these correspond to a number i.e. '0','1', '2', when referencing fragments */
     private void setupViewPager(ViewPager viewPager) {
         SectionsStatePagerAdapter adapter = new SectionsStatePagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new Fragment1(), "Fragment1");
-        adapter.addFragment(new Fragment2(), "Fragment2");
-        adapter.addFragment(new Fragment3(), "Fragment3");
-        adapter.addFragment(new Fragment4_A1(), "Fragment4_A1");
-        adapter.addFragment(new Fragment4_B1(), "Fragment4_B1");
-        adapter.addFragment(new Fragment4_B2(), "Fragment4_B2");
-        adapter.addFragment(new Fragment4_B3(), "Fragment4_B3");
+        adapter.addFragment(new Fragment1(), "Fragment1");  /*Fragment number '0'*/
+        adapter.addFragment(new Fragment2(), "Fragment2");  /*Fragment number '1'*/
+        adapter.addFragment(new Fragment3(), "Fragment3");  /*Fragment number '2'*/
+        adapter.addFragment(new Fragment4_A1(), "Fragment4_A1"); /*Fragment number '3'*/
+        adapter.addFragment(new Fragment4_B1(), "Fragment4_B1"); /*Fragment number '4'*/
+        adapter.addFragment(new Fragment4_B2(), "Fragment4_B2"); /*Fragment number '5'*/
+        adapter.addFragment(new Fragment4_B3(), "Fragment4_B3"); /*Fragment number '6'*/
         viewPager.setAdapter(adapter);
     }
 

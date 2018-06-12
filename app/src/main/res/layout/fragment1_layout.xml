@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorMegaMan"
+    android:background="@color/Megaman"
     android:orientation="vertical">
 
 
@@ -11,8 +11,9 @@
         android:id="@+id/textTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="31dp"
         android:text="@string/welcome_to_fragment1"
         android:textSize="24sp" />
 
@@ -114,6 +115,7 @@
         android:layout_marginTop="10dp"
         android:text="@string/upload_media"
         android:textAllCaps="false" />
+
 
 
 </RelativeLayout>

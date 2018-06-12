@@ -72,6 +72,22 @@
             android:id="@+id/toolbarTop"
             android:background="@drawable/white_grey_border_bottom">
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="Chat"
+                    android:textSize="20sp"
+                    android:textColor="@color/wallet_holo_blue_light"
+                    android:id="@+id/profilenameTitletoolbar"/>
+
+
+            </RelativeLayout>
+
         </android.support.v7.widget.Toolbar>
 
 

@@ -32,4 +32,11 @@
     <string name="go_to_fragment_4b">Go to Fragment 4b1</string>
     <string name="Time">Date and Time</string>
     <string name="category">Category:</string>
+    <string name="SettingTitleBar">Settings</string>
+    <string name="account_settings">Account Settings</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="edit_payment_method">Payment Method</string>
+    <string name="invite_friend">Invite a Friend</string>
+    <string name="notifications">Notifications</string>
 </resources>

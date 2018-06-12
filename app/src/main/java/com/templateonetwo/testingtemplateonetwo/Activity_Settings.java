@@ -1,21 +1,44 @@
 package com.templateonetwo.testingtemplateonetwo;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class Activity_Settings extends AppCompatActivity {
+
+    private static final String TAG = "Activity_Settings";
+    private static final int ACTIVITY_NUM = 4;
+    private Context mContext = Activity_Settings.this;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_settings);
-        TextView settings_title = (TextView) findViewById(R.id.activityTitle_Settings);
+        Log.d(TAG, "onCreate: started.");
+     // TextView settings_title = (TextView) findViewById(R.id.activityTitle_Settings);
+
+     /* setting up ellipses profile menu "ellipses",
+        not setting up tool bar 14:18 (Account Setting Layout Part 10 - Instagram Clone)*/
+        ImageView profileMenu = (ImageView) findViewById(R.id.profileMenu);
+        profileMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            Log.d(TAG, "onClick: navigating to account setting.");}
+        });
 
 
 /////////////////////////////*Bottom Navigation Begin*/////////////////////////////////////////////////////
@@ -70,7 +93,29 @@ public class Activity_Settings extends AppCompatActivity {
 
 /////////////////////////////////////*Bottom Navigation Bar end*/////////////////////////////////////////////////////
 
+        //*Need to commit this method nested inside of onCreate, otherwise won't show up*/
+        setupSettingList();
+    }
 
+    /////Setting up Listview in setting //////
+    private void setupSettingList(){
+
+        Log.d(TAG, "setupSettingList: initilizign 'Account Settings' list.");
+        ListView listView = (ListView) findViewById(R.id.lvAccountSettings);
+
+        ArrayList<String> options = new ArrayList<>();
+        options.add(getString(R.string.edit_profile));
+        options.add(getString(R.string.notifications));
+        options.add(getString(R.string.invite_friend));
+        options.add(getString(R.string.edit_payment_method));
+        options.add(getString(R.string.sign_out));
+
+        ArrayAdapter adapterforSettingList = new ArrayAdapter(mContext, android.R.layout.simple_list_item_1, options);
+        listView.setAdapter(adapterforSettingList);
 
     }
-}
+
+
+ }
+
+

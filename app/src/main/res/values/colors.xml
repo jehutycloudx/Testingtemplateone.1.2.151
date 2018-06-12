@@ -5,5 +5,16 @@
     <color name="colorAccent">#FF4081</color>
     <color name="colorGrey">#c3c3c3</color>
     <color name="colorWhite">#FFFFFF</color>
-    <color name="colorMegaMan">#48dbfb</color>
+    <color name="JadeDustTeal">#00d2d3</color>
+    <color name="AquaVelvet">#01a3a4</color>
+    <color name="ArmourRed">#ee5253</color>
+    <color name="GreenMountain">#10ac84 </color>
+    <color name="JigglyPink"> #ff9ff3</color>
+    <color name="DragonOrange">#ff9f43</color>
+    <color name="VibrantYellow">#ffd32a</color>
+    <color name="PearlBlack">#1e272e</color>
+    <color name="LightGrey">#d2dae2</color>
+    <color name="MegamanBlue">#4bcffa</color>
+    <color name="SizzlingRed">#f53b57</color>
+    <color name="Megaman">#4bcffa</color>
 </resources>

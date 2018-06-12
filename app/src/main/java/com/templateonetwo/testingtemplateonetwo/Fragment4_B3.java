@@ -47,7 +47,7 @@ public class Fragment4_B3 extends android.support.v4.app.Fragment implements Fra
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-         final View view = inflater.inflate(R.layout.fragment4_b3_layout_video_path, container, false);
+        final View view = inflater.inflate(R.layout.fragment4_b3_layout_video_path, container, false);
 
         mProjecttitle3 = (TextView) view.findViewById(R.id.titleProjectName3);
         mDescription3 = (TextView) view.findViewById(R.id.textViewDescription3);
@@ -61,7 +61,6 @@ public class Fragment4_B3 extends android.support.v4.app.Fragment implements Fra
         btnPost = (Button) view.findViewById(R.id.btnPost);
 
 
-
         Log.d(Tag4b3, "onCreateView: started.");
 
 
@@ -69,7 +68,7 @@ public class Fragment4_B3 extends android.support.v4.app.Fragment implements Fra
     /*For fragments, contextually, you are "in" an activity already, so you don't traditionally
       navigate to other 'activities', you have to 'getActivity'as seen below*/
 
-    //* button 4b placeholder *//
+        //* button 4b placeholder *//
         btnbacktoNavFrag4b2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -87,9 +86,13 @@ public class Fragment4_B3 extends android.support.v4.app.Fragment implements Fra
 
         });
 
-            return view;
+        return view;
+    }
+/*May need to use 'onEditerActionListener' or some other listener to set text on 4b3 from 4b1 when typed...usually you use
+  onClickListener but...it would make more since if you had seperate fragments instead of a
+    viewpager...that way, when you click 'Next', the data could be passed through via onClick, but
+    regardless, we will try another method to cope*/
 
-            }
 
 /*Needed for this class to implement spinner class methods in order to work*/
     @Override
