@@ -6,15 +6,22 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.RelativeLayout;
+
+import com.templateonetwo.testingtemplateonetwo.SettingsPackage.EditProfileFragment;
+import com.templateonetwo.testingtemplateonetwo.SettingsPackage.SignOutFragment;
+import com.templateonetwo.testingtemplateonetwo.Utils.SectionsPagerAdapter;
+import com.templateonetwo.testingtemplateonetwo.Utils.SectionsStatePagerAdapter;
 
 import java.util.ArrayList;
 
@@ -23,6 +30,10 @@ public class Activity_Settings extends AppCompatActivity {
     private static final String TAG = "Activity_Settings";
     private static final int ACTIVITY_NUM = 4;
     private Context mContext = Activity_Settings.this;
+    private SectionsStatePagerAdapter pagerAdapter;
+    private ViewPager mViewPager;
+    private RelativeLayout mRelativeLayout;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,6 +41,8 @@ public class Activity_Settings extends AppCompatActivity {
         setContentView(R.layout.layout_settings);
         Log.d(TAG, "onCreate: started.");
      // TextView settings_title = (TextView) findViewById(R.id.activityTitle_Settings);
+        mViewPager = (ViewPager) findViewById(R.id.settingscontainer);
+        mRelativeLayout = (RelativeLayout) findViewById(R.id.relLayout1); //* may need to Change THIS*//
 
      /* setting up ellipses profile menu "ellipses",
         not setting up tool bar 14:18 (Account Setting Layout Part 10 - Instagram Clone)*/
@@ -38,6 +51,9 @@ public class Activity_Settings extends AppCompatActivity {
             @Override
             public void onClick(View v) {
             Log.d(TAG, "onClick: navigating to account setting.");}
+
+
+
         });
 
 
@@ -95,6 +111,8 @@ public class Activity_Settings extends AppCompatActivity {
 
         //*Need to commit this method nested inside of onCreate, otherwise won't show up*/
         setupSettingList();
+        //*Need to commit this method nested inside of onCreate, otherwise won't show up for fragments*/
+        setupFragments();
     }
 
     /////Setting up Listview in setting //////
@@ -104,18 +122,50 @@ public class Activity_Settings extends AppCompatActivity {
         ListView listView = (ListView) findViewById(R.id.lvAccountSettings);
 
         ArrayList<String> options = new ArrayList<>();
-        options.add(getString(R.string.edit_profile));
-        options.add(getString(R.string.notifications));
-        options.add(getString(R.string.invite_friend));
-        options.add(getString(R.string.edit_payment_method));
-        options.add(getString(R.string.sign_out));
+        options.add(getString(R.string.edit_profile_fragment)); /*i.e. fragment (0)*/
+        options.add(getString(R.string.notifications_fragment)); /*i.e. fragment (1)*/
+        options.add(getString(R.string.invite_friend_fragment)); /*i.e. fragment (2)*/
+        options.add(getString(R.string.edit_payment_method_fragment)); /*i.e. fragment (3)*/
+        options.add(getString(R.string.sign_out_fragment)); /*i.e. fragment (4)*/
 
         ArrayAdapter adapterforSettingList = new ArrayAdapter(mContext, android.R.layout.simple_list_item_1, options);
         listView.setAdapter(adapterforSettingList);
 
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d(TAG, "onItemClick: navigating to fragment#: " + position);
+                setViewPager(position);
+            }
+        });
+
+
+
     }
 
+    private void setupFragments(){
 
- }
+        pagerAdapter = new SectionsStatePagerAdapter(getSupportFragmentManager());
+        pagerAdapter.addFragment(new EditProfileFragment(), getString(R.string.edit_profile_fragment)); /*i.e. fragment (0)*/
+        pagerAdapter.addFragment(new EditProfileFragment(), getString(R.string.account_settings)); /*i.e. fragment (1)*/
+        pagerAdapter.addFragment(new EditProfileFragment(), getString(R.string.account_settings)); /*i.e. fragment (2)*/
+        pagerAdapter.addFragment(new EditProfileFragment(), getString(R.string.account_settings)); /*i.e. fragment (3)*/
+        pagerAdapter.addFragment(new SignOutFragment(), getString(R.string.sign_out_fragment)); /*i.e. fragment (4)*/
+
+
+    }
+
+    private void setViewPager(int fragmentNumber){
+
+        mRelativeLayout.setVisibility(View.GONE);
+        Log.d(TAG, "setViewPager: navigating to fragment #: " + fragmentNumber);
+        mViewPager.setAdapter(pagerAdapter);
+        mViewPager.setCurrentItem(fragmentNumber);
+
+    }
+}
+
+
 
 

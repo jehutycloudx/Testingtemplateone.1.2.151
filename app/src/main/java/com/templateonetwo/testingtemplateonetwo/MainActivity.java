@@ -15,7 +15,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import de.hdodenhof.circleimageview.CircleImageView;
+
+import com.templateonetwo.testingtemplateonetwo.Utils.SectionsStatePagerAdapter;
 
 
 public  class MainActivity extends AppCompatActivity implements Fragment1.OnPhotoSelectedLister,Fragment1.OnVideoSelectedLister {

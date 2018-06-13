@@ -6,11 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+
+    <include layout= "@layout/layout_center_viewpager"/>
+
     <RelativeLayout
 
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/relLayout">
+        android:id="@+id/relLayout1">
 
 
         <RelativeLayout

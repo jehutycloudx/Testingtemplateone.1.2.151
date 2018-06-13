@@ -1,8 +1,9 @@
-package com.templateonetwo.testingtemplateonetwo;
+package com.templateonetwo.testingtemplateonetwo.Utils;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentPagerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,28 +19,22 @@ import java.util.List;
 /*after above is done we need to create two objects, one is an object for the list of the fragments,
 and another is a list for the title of the fragments. */
 
-public class SectionsStatePagerAdapter extends FragmentStatePagerAdapter {
+public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
+    private static final String TAG = "SectionPagerAdapter";
     private final List<Fragment> mFragmentList = new ArrayList<>();
-    private final List<String> mFragmentTitleList = new ArrayList<>();
 
-    public SectionsStatePagerAdapter(FragmentManager fm) { super(fm); }
+    public SectionsPagerAdapter(FragmentManager fm) {super(fm);}
 
-    /*This method is to actually add the fragments in the lists for the below Override methods*/
-    public void addFragment(Fragment fragment, String title){
-        mFragmentList.add(fragment);
-        mFragmentTitleList.add(title);
+    @Override
+    public Fragment getItem(int position) {
+        return mFragmentList.get(position);
     }
 
     @Override
-    public Fragment getItem(int position) { return mFragmentList.get(position);}
-        /*modified return 'null' to return 'mFragmentList.get(pos...)'*/
-        /*we are simply returning the item in question at the position it is in */
+    public int getCount() {
+        return mFragmentList.size();
+    }
 
-    @Override
-    public int getCount() { return mFragmentList.size();}
-
-
-    /*we are simply returning the entire fragment list, instead of returning 0*/
-
+    public void addFragment (Fragment fragment) {mFragmentList.add(fragment);}
 }
