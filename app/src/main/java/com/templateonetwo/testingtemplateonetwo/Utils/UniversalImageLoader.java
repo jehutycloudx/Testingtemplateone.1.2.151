@@ -1,4 +1,4 @@
-package com.templateonetwo.testingtemplateonetwo;
+package com.templateonetwo.testingtemplateonetwo.Utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;

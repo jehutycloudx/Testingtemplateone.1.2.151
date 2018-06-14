@@ -12,7 +12,7 @@ import android.widget.ImageView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.templateonetwo.testingtemplateonetwo.R;
-import com.templateonetwo.testingtemplateonetwo.UniversalImageLoader;
+import com.templateonetwo.testingtemplateonetwo.Utils.UniversalImageLoader;
 
 public class EditProfileFragment extends Fragment {
 

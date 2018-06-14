@@ -19,6 +19,9 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import com.templateonetwo.testingtemplateonetwo.SettingsPackage.EditProfileFragment;
+import com.templateonetwo.testingtemplateonetwo.SettingsPackage.InviteFriendsFragment;
+import com.templateonetwo.testingtemplateonetwo.SettingsPackage.NotificationsFragment;
+import com.templateonetwo.testingtemplateonetwo.SettingsPackage.PaymentFragment;
 import com.templateonetwo.testingtemplateonetwo.SettingsPackage.SignOutFragment;
 import com.templateonetwo.testingtemplateonetwo.Utils.SectionsPagerAdapter;
 import com.templateonetwo.testingtemplateonetwo.Utils.SectionsStatePagerAdapter;
@@ -137,6 +140,8 @@ public class Activity_Settings extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.d(TAG, "onItemClick: navigating to fragment#: " + position);
                 setViewPager(position);
+
+               
             }
         });
 
@@ -145,12 +150,15 @@ public class Activity_Settings extends AppCompatActivity {
     }
 
     private void setupFragments(){
+        /*Change which fragment shows up after .addFragment in the parameters,
+    the first parameter in the () i.e. 'new EditProfileFragment' seems to make the decision for which
+     fragment will appear, not so sure of importance of second parameter 'getString...' other then filling out parameters*/
 
         pagerAdapter = new SectionsStatePagerAdapter(getSupportFragmentManager());
         pagerAdapter.addFragment(new EditProfileFragment(), getString(R.string.edit_profile_fragment)); /*i.e. fragment (0)*/
-        pagerAdapter.addFragment(new EditProfileFragment(), getString(R.string.account_settings)); /*i.e. fragment (1)*/
-        pagerAdapter.addFragment(new EditProfileFragment(), getString(R.string.account_settings)); /*i.e. fragment (2)*/
-        pagerAdapter.addFragment(new EditProfileFragment(), getString(R.string.account_settings)); /*i.e. fragment (3)*/
+        pagerAdapter.addFragment(new NotificationsFragment(), getString(R.string.notifications_fragment)); /*i.e. fragment (1)*/
+        pagerAdapter.addFragment(new InviteFriendsFragment(), getString(R.string.invite_friend_fragment)); /*i.e. fragment (2)*/
+        pagerAdapter.addFragment(new PaymentFragment(), getString(R.string.edit_payment_method_fragment)); /*i.e. fragment (3)*/
         pagerAdapter.addFragment(new SignOutFragment(), getString(R.string.sign_out_fragment)); /*i.e. fragment (4)*/
 
 

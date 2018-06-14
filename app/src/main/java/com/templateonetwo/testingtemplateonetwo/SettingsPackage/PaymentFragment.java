@@ -10,15 +10,15 @@ import android.view.ViewGroup;
 
 import com.templateonetwo.testingtemplateonetwo.R;
 
-public class SignOutFragment extends Fragment {
+public class PaymentFragment extends Fragment {
 
-    private static final String TAG = "SignOutFragment";
+    private static final String TAG = "PaymentFragment";
 
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_signout, container, false);
+        View view = inflater.inflate(R.layout.fragment_payment_method, container, false);
 
 
 
