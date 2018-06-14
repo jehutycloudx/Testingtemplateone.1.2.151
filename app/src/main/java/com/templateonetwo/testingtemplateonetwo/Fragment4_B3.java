@@ -10,8 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 public class Fragment4_B3 extends android.support.v4.app.Fragment implements Fragment1.OnVideoSelectedLister, Fragment1.OnPhotoSelectedLister, AdapterView.OnItemSelectedListener {
 
@@ -27,6 +29,11 @@ public class Fragment4_B3 extends android.support.v4.app.Fragment implements Fra
     public TextView mCategoryfield3;
     public TextView mProjecttitle3;
     public TextView mDescription3;
+
+    public VideoView result_video;
+    public ImageView secondimage;
+    private Uri m3ImageUri;
+    private Bitmap m3Bitmap;
 
 
       public Fragment4_B3() {}
@@ -86,6 +93,48 @@ public class Fragment4_B3 extends android.support.v4.app.Fragment implements Fra
 
         });
 
+     /* Image and Video placement, for review, should be same as fragment 1 and is placed
+           as same time as fragment 1*////////////////////
+////////////////////////////////////////////////////////////////////////
+
+        result_video = (VideoView) view.findViewById(R.id.videoView3);
+        secondimage = (ImageView) view.findViewById(R.id.imageView3);
+
+        Fragment1.OnPhotoSelectedLister onPhotoSelectedLister = (Fragment1.OnPhotoSelectedLister) getActivity();
+        final Fragment1.OnVideoSelectedLister onVideoSelectedLister = (Fragment1.OnVideoSelectedLister) getActivity();
+
+        if (onVideoSelectedLister.setVideopath() == null)
+            //  bitmapthumbnail.setImageBitmap(onPhotoSelectedLister.setImageBitmap());
+            secondimage.setImageBitmap(onPhotoSelectedLister.setImageBitmap());
+
+
+        else  {
+            Uri Viduri = onVideoSelectedLister.setVideopath();
+                result_video.setVideoURI(Viduri); /**did change yet from setVideoURI to GetvideoURI*/
+         }
+
+             Log.d(Tag4b3, "onCreateView: started.");
+
+
+        result_video.setOnClickListener(new View.OnClickListener() {
+            /*you can replace result_video with mPlaybutton*/
+
+            @Override
+            public void onClick(View v) {
+
+                result_video.start();
+              //  secondimage.setVisibility(View.INVISIBLE);
+
+            }
+        });
+
+
+
+
+
+        /* */////////////////////////////
+
+
         return view;
     }
 /*May need to use 'onEditerActionListener' or some other listener to set text on 4b3 from 4b1 when typed...usually you use
@@ -129,14 +178,27 @@ public class Fragment4_B3 extends android.support.v4.app.Fragment implements Fra
 
     @Override
     public void getImagePath(Uri imagePath) {
+        Log.d(Tag4b3, "setting image to imageview bitmapthumbnail");
+
+        secondimage.setImageURI(imagePath);
+        m3Bitmap = null;
+        m3ImageUri = imagePath;
+        // setTargetFragment(this, 104);
+
     }
 
     @Override
     public void getImageBitmap(Bitmap bitmap) {
+        Log.d(Tag4b3, "setting image from gallery to bitmapthumbnail");
+
+        secondimage.setImageBitmap(bitmap);
+        m3ImageUri = null;
+        m3Bitmap = bitmap;
+
     }
 
     @Override
-    public Uri setImagePath() {
+    public Bitmap setImagePath() {
         return null;
     }
 
@@ -146,12 +208,12 @@ public class Fragment4_B3 extends android.support.v4.app.Fragment implements Fra
     }
 
     @Override
-    public Uri getVideopath() {
+    public Uri setVideopath() {
         return null;
     }
 
     @Override
-    public void setVideopath(Uri data) {
+    public void getVideopath(Uri data) {
 
     }
 }

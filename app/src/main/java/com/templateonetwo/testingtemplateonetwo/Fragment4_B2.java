@@ -204,7 +204,7 @@ public class Fragment4_B2 extends android.support.v4.app.Fragment implements Fra
     }
 
     @Override
-    public Uri setImagePath() {
+    public Bitmap setImagePath() {
         return null;
     }
 
@@ -219,12 +219,12 @@ public class Fragment4_B2 extends android.support.v4.app.Fragment implements Fra
     //}
 
     @Override
-    public Uri getVideopath() {
+    public Uri setVideopath() {
         return null;
     }
 
     @Override
-    public void setVideopath(Uri data) {
+    public void getVideopath(Uri data) {
 
     }
 

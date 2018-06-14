@@ -24,6 +24,7 @@ public  class MainActivity extends AppCompatActivity implements Fragment1.OnPhot
     private static final String TAG = "MainActivity";
     private static final int REQUEST_CODE_P = 123;
     Uri uri;
+    Uri mUri; /*just adding this to make the below code work for interface*/
     Bitmap mBitmap;
 
     private SectionsStatePagerAdapter mSectionsStatePagerAdapter;
@@ -158,18 +159,26 @@ public  class MainActivity extends AppCompatActivity implements Fragment1.OnPhot
 
     /////*Getting image and video paths below *///////
 
+
+
+    @Override
+    public void getVideopath(Uri data) {
+        uri=data;
+    }
+
+    @Override
+    public void getImageBitmap(Bitmap bitmap) {
+        mBitmap=bitmap;
+    }
+
+
     @Override
     public void getImagePath(Uri imagePath) {
         uri=imagePath;
     }
 
     @Override
-    public void getImageBitmap(Bitmap bitmap) {
-       mBitmap=bitmap;
-    }
-
-    @Override
-    public Uri setImagePath() {
+    public Uri setVideopath() {
         return uri;
     }
 
@@ -179,15 +188,19 @@ public  class MainActivity extends AppCompatActivity implements Fragment1.OnPhot
     }
 
     @Override
-    public Uri getVideopath() {
-        return uri;
+    public Bitmap setImagePath() {
+        return null;
     }
 
-    @Override
-    public void setVideopath(Uri data) {
-        uri=data;
+   /* for 'Bitmap setImagePath (){..' i think if you add an mUri global variable (which I have done above)
+    and also change this from "Public Bitmap" to "Public Uri" that might work, inorder to match getImagePath method components */
+  /*change this to the following code stated here when you have time */
+  //  @Override
+  //  public Bitmap setImagePath() {
+  //      return null;
+  //  }
 
-    }
+
 }
 
 

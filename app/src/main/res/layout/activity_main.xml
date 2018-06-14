@@ -28,7 +28,7 @@
             android:layout_below="@id/relLayoutTopBar"
             android:layout_above="@id/relLayoutBotBar">
 
-
+<!-- This 'container', below, is what fragments will be swapped out of -->
             <android.support.v4.view.ViewPager
                 android:id="@+id/container"
                 android:layout_width="match_parent"

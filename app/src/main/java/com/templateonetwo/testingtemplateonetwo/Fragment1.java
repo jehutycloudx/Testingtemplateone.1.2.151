@@ -32,15 +32,15 @@ public class Fragment1 extends android.support.v4.app.Fragment {
        void getImagePath(Uri imagePath);
        void getImageBitmap(Bitmap bitmap);
        
-        Uri setImagePath();
-
+        Bitmap setImagePath();
         Bitmap setImageBitmap();
 
        }
 
     public interface OnVideoSelectedLister {
-        Uri getVideopath();  //?????? maybe video is data here?
-        void setVideopath(Uri data);
+        Uri setVideopath();  //?????? maybe video is data here?
+        void getVideopath(Uri data);
+
          }
 
     OnPhotoSelectedLister mOnPhotoSelectedLister;  //*maybe there is a video version of this*//
@@ -197,13 +197,8 @@ public class Fragment1 extends android.support.v4.app.Fragment {
                 Toast.makeText(getActivity(), "Accessing Gallery", Toast.LENGTH_SHORT).show();
                 /* Use 'Intent' here since this is a activity you wish to navigate from*/
                 Intent intentMediaUpload = new Intent(Intent.ACTION_GET_CONTENT);
-                intentMediaUpload.setType("image/*");
+                intentMediaUpload.setType("image/*");   /* this may need to be modified to add video as well */
                 startActivityForResult(intentMediaUpload, PICK_FILE_REQUEST_CODE);
-                /*testng*/
-            //    setTargetFragment(new Fragment4_B1(), CAMERA_FILE_REQUEST_CODE);
-            //    setTargetFragment(null, -1);
-            //    setTargetFragment(new Fragment4_B1(), 33);
-
 
             }
         });
@@ -214,19 +209,21 @@ public class Fragment1 extends android.support.v4.app.Fragment {
 
     Fragment mFragment4B1 = new Fragment4_B1();
 
-
+////////////*OnActivityResult*///////////////////////
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         /* Results when selecting a new image from memory*/
+
         if (requestCode == PICK_FILE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             Uri selectedImageUri = data.getData();
             Log.d(Tag, "onActivityResult image uri:, Uploading Media from Gallery " + selectedImageUri);
 
             //Send the uri to PostFragment or Posting page/area
-            if (mOnPhotoSelectedLister != null || mOnVideoSelectedLister !=null)
+
+            if (mOnPhotoSelectedLister != null && mOnVideoSelectedLister !=null)
             mOnPhotoSelectedLister.getImagePath(selectedImageUri);
             MainActivity mainActivity=(MainActivity)getActivity();
             mainActivity.gotoFragment(4);
@@ -234,15 +231,16 @@ public class Fragment1 extends android.support.v4.app.Fragment {
             //      Bitmap mBitmapView = (Bitmap) <unknown>.findViewById(R.id.bmThumbnail);
             /*or try setting here*/  //setTargetFragment(fragmentx,PICK_FILE_REQUEST_CODE);
 
-        }
+         }
 
         /* Results when taking a new photo/image from Camera*/
+
         else if (requestCode == CAMERA_FILE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             Log.d(Tag, "onActivity Result: done taking new photo");
             Bitmap bitmapimage;
             bitmapimage = (Bitmap) data.getExtras().get("data");
             mOnPhotoSelectedLister.getImageBitmap(bitmapimage);
-            mOnVideoSelectedLister.setVideopath(null);
+            mOnVideoSelectedLister.getVideopath(null);
             MainActivity mainActivity=(MainActivity)getActivity();
             mainActivity.gotoFragment(4);
 
@@ -265,14 +263,14 @@ public class Fragment1 extends android.support.v4.app.Fragment {
         else if (requestCode == VIDEO_FILE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             Uri videoUri = data.getData();
 //            mVideoview.setVideoURI(videoUri);
-            mOnVideoSelectedLister.setVideopath(videoUri);
+            mOnVideoSelectedLister.getVideopath(videoUri);
             MainActivity mainActivity=(MainActivity)getActivity();
             mainActivity.gotoFragment(4);
 
             Log.d(Tag, "onActivity Result: done taking new video");
             //Send the videoUri to PostFragment or Posting page/area
             if (mOnVideoSelectedLister != null)
-            mOnVideoSelectedLister.setVideopath(videoUri);
+            mOnVideoSelectedLister.getVideopath(videoUri);
             /*or try setting here*/ //  setTargetFragment(fragmentx,CAMERA_FILE_REQUEST_CODE);
 
 

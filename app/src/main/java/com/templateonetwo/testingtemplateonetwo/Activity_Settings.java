@@ -141,7 +141,7 @@ public class Activity_Settings extends AppCompatActivity {
                 Log.d(TAG, "onItemClick: navigating to fragment#: " + position);
                 setViewPager(position);
 
-               
+
             }
         });
 

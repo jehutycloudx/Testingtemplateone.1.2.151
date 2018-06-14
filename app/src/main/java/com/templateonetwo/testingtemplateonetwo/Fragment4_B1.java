@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +16,8 @@ import android.widget.VideoView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+
+import com.templateonetwo.testingtemplateonetwo.Utils.UniversalImageLoader;
 
 import static android.media.ThumbnailUtils.extractThumbnail;
 
@@ -65,13 +66,15 @@ public class Fragment4_B1 extends android.support.v4.app.Fragment implements Fra
         Fragment1.OnPhotoSelectedLister onPhotoSelectedLister = (Fragment1.OnPhotoSelectedLister) getActivity();
         final Fragment1.OnVideoSelectedLister onVideoSelectedLister = (Fragment1.OnVideoSelectedLister) getActivity();
 
-        if (onVideoSelectedLister.getVideopath() == null)
+        if (onVideoSelectedLister.setVideopath() == null)
             //  bitmapthumbnail.setImageBitmap(onPhotoSelectedLister.setImageBitmap());
             secondimage.setImageBitmap(onPhotoSelectedLister.setImageBitmap());
+        //        secondimage.setImageURI(onPhotoSelectedLister.setImagePath());
+
 
 
         else  {
-            Uri Viduri = onVideoSelectedLister.getVideopath();
+            Uri Viduri = onVideoSelectedLister.setVideopath();
             //     String [] filePathColumn = {MediaStore.Images.Media.DATA};
             //String path=uri.getPath(); so this was removed
             //     Cursor cursor = getActivity().getContentResolver().query(uri, filePathColumn, null, null, null);
@@ -80,7 +83,7 @@ public class Fragment4_B1 extends android.support.v4.app.Fragment implements Fra
             //    String picturePath = cursor.getString(columnIndex);
             //    cursor.close();
 
-            result_video.setVideoURI(Viduri);
+            result_video.setVideoURI(Viduri);  /**didn't change to getVideoURI yet */
 
         }
 
@@ -112,7 +115,7 @@ public class Fragment4_B1 extends android.support.v4.app.Fragment implements Fra
             public void onClick(View v) {
 
                 result_video.start();
-                secondimage.setVisibility(View.INVISIBLE);
+                //secondimage.setVisibility(View.INVISIBLE);
 
             }
         });
@@ -161,10 +164,9 @@ public class Fragment4_B1 extends android.support.v4.app.Fragment implements Fra
 
 
 
-    public void setBitmapthumbnail(ImageView bitmapthumbnail) {
-        this.bitmapthumbnail = bitmapthumbnail;
-
-    }
+  //  public void setBitmapthumbnail(ImageView bitmapthumbnail) {
+   //     this.bitmapthumbnail = bitmapthumbnail;
+   // }
 /*configuration for camcorder setup 2, this code is if camera activity will happen on same screen, so am temporarily disabling
       as we need the code from Fragement 1 which is where camera activity is located */
   /*  @Override
@@ -187,11 +189,12 @@ public class Fragment4_B1 extends android.support.v4.app.Fragment implements Fra
 //    }
 
 
-
-
     @Override
-        public void getImagePath(Uri imagePath) {
-            Log.d(Tag, "setting image to imageview bitmapthumbnail");
+    public void getImagePath(Uri imagePath) {
+    Log.d(Tag, "setting image to imageview bitmapthumbnail");
+
+        //* Experimentation*//
+        UniversalImageLoader.setImage(imagePath.toString(),secondimage, null, null);
 
             secondimage.setImageURI(imagePath);
             mBitmap = null;
@@ -201,10 +204,10 @@ public class Fragment4_B1 extends android.support.v4.app.Fragment implements Fra
         }
 
 
-
     @Override
     public void getImageBitmap(Bitmap bitmap) {
-        Log.d(Tag, "setting image from gallery to bitmapthumbnail");
+    Log.d(Tag, "setting image from gallery to bitmapthumbnail");
+    //UniversalImageLoader does not work with this because it uses "Bitmap" *//
 
        secondimage.setImageBitmap(bitmap);
        mImageUri = null;
@@ -214,7 +217,7 @@ public class Fragment4_B1 extends android.support.v4.app.Fragment implements Fra
     }
 
     @Override
-    public Uri setImagePath() {
+    public Bitmap setImagePath() {
         return null;
     }
 
@@ -225,19 +228,14 @@ public class Fragment4_B1 extends android.support.v4.app.Fragment implements Fra
 
 
     @Override
-    public Uri getVideopath() {
+    public Uri setVideopath() {
         return null;
     }
 
     @Override
-    public void setVideopath(Uri data) {
+    public void getVideopath(Uri data) {
 
     }
-
-
-
-
-
 
 
 }

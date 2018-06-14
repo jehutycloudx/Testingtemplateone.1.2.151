@@ -40,8 +40,17 @@
             android:layout_marginLeft="18dp"
             android:layout_marginRight="18dp"
             android:layout_marginTop="15dp"
+            />
 
-            app:srcCompat="@android:drawable/ic_media_play" />
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="21dp"
+            android:layout_height="21dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/videoView3"
+            app:srcCompat="@drawable/ic_media_play_dark"
+            android:layout_alignLeft="@+id/videoView3" />
+
         <!-- Do you need Glide or Universal Imageloader to properly display pics? -->
         <!-- take a picture results in grainy quality and wrong aspect ratio no matter how much adjustment in XML-->
     </RelativeLayout>
