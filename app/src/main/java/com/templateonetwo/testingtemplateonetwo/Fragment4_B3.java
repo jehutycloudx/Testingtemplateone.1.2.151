@@ -15,7 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
-public class Fragment4_B3 extends android.support.v4.app.Fragment implements Fragment1.OnVideoSelectedLister, Fragment1.OnPhotoSelectedLister, AdapterView.OnItemSelectedListener {
+public class Fragment4_B3 extends android.support.v4.app.Fragment implements Fragment1.OnVideoSelectedLister, Fragment1.OnPhotoSelectedLister, AdapterView.OnItemSelectedListener, Fragment4_B1.OnProjectTitleSetListener {
 
 
 
@@ -35,6 +35,8 @@ public class Fragment4_B3 extends android.support.v4.app.Fragment implements Fra
     private Uri m3ImageUri;
     private Bitmap m3Bitmap;
 
+    private String mIncomingMessage_ProjectTitle = "";
+
 
       public Fragment4_B3() {}
 
@@ -44,7 +46,22 @@ public class Fragment4_B3 extends android.support.v4.app.Fragment implements Fra
             "Plumbing & Bathroom", "Remodeling", "Roofing & Gutters", "Siding",
             "Windows", "Other" };
 
-    /*below is auto-generate code from right clicking and inserting 'OnCreateView', this method
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            mIncomingMessage_ProjectTitle = bundle.getString(getString(R.string.project_title_optional));
+
+
+        }
+
+
+    }
+
+
+/*below is auto-generate code from right clicking and inserting 'OnCreateView', this method
     is specific to Fragments vs. 'OnCreate' which is just for activities.
     You also have to create View objects and return at the bottom of onCreateView
      Deleted the 'super return...' code line */
@@ -57,6 +74,7 @@ public class Fragment4_B3 extends android.support.v4.app.Fragment implements Fra
         final View view = inflater.inflate(R.layout.fragment4_b3_layout_video_path, container, false);
 
         mProjecttitle3 = (TextView) view.findViewById(R.id.titleProjectName3);
+        mProjecttitle3.setVisibility(View.GONE);
         mDescription3 = (TextView) view.findViewById(R.id.textViewDescription3);
 
         mTimefield3 = (TextView) view.findViewById(R.id.TimePostText);
@@ -131,7 +149,7 @@ public class Fragment4_B3 extends android.support.v4.app.Fragment implements Fra
 
 
 
-
+//        setIncomingMessage_ProjectTitle();
         /* */////////////////////////////
 
 
@@ -174,6 +192,19 @@ public class Fragment4_B3 extends android.support.v4.app.Fragment implements Fra
 //    }
 
 
+    /* This code is to set the incoming message from Frag4b1 to be placed in Frag4b3,
+       need to setup a method*/
+
+ //   private void setIncomingMessage_ProjectTitle(){
+ //       if(!mIncomingMessage_ProjectTitle.equals("")){
+ //           mProjecttitle3.setText(mIncomingMessage_ProjectTitle);
+ //       }
+ //   }
+
+    public void updateinfoPT(String name){
+        mProjecttitle3.setText(name);
+        mProjecttitle3.setVisibility(View.VISIBLE);
+    }
 
 
     @Override
@@ -198,7 +229,7 @@ public class Fragment4_B3 extends android.support.v4.app.Fragment implements Fra
     }
 
     @Override
-    public Bitmap setImagePath() {
+    public Uri setImagePath() {
         return null;
     }
 
@@ -214,6 +245,11 @@ public class Fragment4_B3 extends android.support.v4.app.Fragment implements Fra
 
     @Override
     public void getVideopath(Uri data) {
+
+    }
+
+    @Override
+    public void setProjectTitle(String projectTitle) {
 
     }
 }

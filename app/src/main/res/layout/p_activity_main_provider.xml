@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".ServiceProviderPackage.MainActivity2_ServiceProvider">
 
     <RelativeLayout
 
@@ -30,7 +30,7 @@
 
 
             <android.support.v4.view.ViewPager
-                android:id="@+id/container"
+                android:id="@+id/container_provider"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
             </android.support.v4.view.ViewPager>
@@ -46,7 +46,7 @@
           <android.support.design.widget.BottomNavigationView
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:id="@+id/bottomNavView_Bar"
+              android:id="@+id/bottomNavView_Bar2"
               android:background="@drawable/white_grey_border_top"
               app:menu="@menu/p_bottom_navigation_menu"
               >
@@ -58,8 +58,6 @@
         </RelativeLayout>
 
     </RelativeLayout>
-
-
 
 
 

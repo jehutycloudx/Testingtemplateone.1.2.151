@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.templateonetwo.testingtemplateonetwo.Fragment4_B1;
 import com.templateonetwo.testingtemplateonetwo.R;
 
 public class SignOutFragment extends Fragment {

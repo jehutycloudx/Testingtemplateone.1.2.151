@@ -47,15 +47,13 @@ public class UniversalImageLoader {
 
         /* This method can be used to set images that are static. It can't be used if the images
         are being changed in the Fragment/Activity - OR if they are being set in a list or
-        a grid
+        a grid, all from Part 14 Universal Image Loader - Classifieds
 
         *@param imgURL
         *@param image
         *@param mProgressBar
         * param append
         */
-
-
 
             //*below method is to only set a SINGLE IMAGE, will not work with multiple *//
             /*using 'append' as one of the parameters for the method below so that you can interchage various files types

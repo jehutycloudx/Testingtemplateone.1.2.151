@@ -29,19 +29,26 @@ public class Fragment1 extends android.support.v4.app.Fragment {
     /*Lecture, 'Selecting an Image for Uploading' - Android Classifieds... */
    
     public interface OnPhotoSelectedLister {
-       void getImagePath(Uri imagePath);
-       void getImageBitmap(Bitmap bitmap);
-       
-        Bitmap setImagePath();
+        void getImagePath(Uri imagePath);
+        void getImageBitmap(Bitmap bitmap);
+
+        Uri setImagePath();
         Bitmap setImageBitmap();
 
-       }
+    }
 
     public interface OnVideoSelectedLister {
-        Uri setVideopath();  //?????? maybe video is data here?
         void getVideopath(Uri data);
+        Uri setVideopath();  //?????? maybe video is data here?
 
-         }
+     }
+
+     public interface OnTextSelectedLister{
+        void getTextpath(String stringpath1);
+        String setTextpath();
+
+     }
+
 
     OnPhotoSelectedLister mOnPhotoSelectedLister;  //*maybe there is a video version of this*//
     OnVideoSelectedLister mOnVideoSelectedLister;
@@ -223,7 +230,7 @@ public class Fragment1 extends android.support.v4.app.Fragment {
 
             //Send the uri to PostFragment or Posting page/area
 
-            if (mOnPhotoSelectedLister != null && mOnVideoSelectedLister !=null)
+            if (mOnPhotoSelectedLister != null || mOnVideoSelectedLister !=null)
             mOnPhotoSelectedLister.getImagePath(selectedImageUri);
             MainActivity mainActivity=(MainActivity)getActivity();
             mainActivity.gotoFragment(4);
@@ -291,9 +298,6 @@ public class Fragment1 extends android.support.v4.app.Fragment {
 
         } catch (ClassCastException e) {
             Log.e(Tag, "OnAttach: ClassCastException: " + e.getMessage());
-        }
-        {
-
         }
 
         super.onAttach(context);

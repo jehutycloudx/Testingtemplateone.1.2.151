@@ -1,6 +1,5 @@
-package com.templateonetwo.testingtemplateonetwo.SettingsPackage;
+package com.templateonetwo.testingtemplateonetwo.ServiceProviderPackage;
 
-import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,11 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.templateonetwo.testingtemplateonetwo.R;
 import com.templateonetwo.testingtemplateonetwo.Utils.UniversalImageLoader;
 
-public class EditProfileFragment extends Fragment {
+public class Activity_Provider_Profile extends Fragment {
 
     private static final String TAG = "EditProifleFragment";
 

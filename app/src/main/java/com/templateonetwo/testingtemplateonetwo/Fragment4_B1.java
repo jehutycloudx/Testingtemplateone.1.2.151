@@ -1,15 +1,18 @@
 package com.templateonetwo.testingtemplateonetwo;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 import android.widget.VideoView;
@@ -17,18 +20,38 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import com.templateonetwo.testingtemplateonetwo.Utils.FragmentdataPass;
 import com.templateonetwo.testingtemplateonetwo.Utils.UniversalImageLoader;
 
 import static android.media.ThumbnailUtils.extractThumbnail;
 
-public class Fragment4_B1 extends android.support.v4.app.Fragment implements Fragment1.OnVideoSelectedLister, Fragment1.OnPhotoSelectedLister, AdapterView.OnItemSelectedListener {
+public class Fragment4_B1 extends android.support.v4.app.Fragment implements Fragment1.OnVideoSelectedLister, Fragment1.OnPhotoSelectedLister, AdapterView.OnItemSelectedListener,Fragment1.OnTextSelectedLister, FragmentdataPass {
 
 
+public interface OnProjectTitleSetListener {
 
+    public void setProjectTitle (String projectTitle);
+
+    }
+
+@Override
+public void onAttach(Context context) {  /*might need to change to Activity activity and then change below from context -> activity*/
+    super.onAttach(context);
+
+    try {
+        mOnProjectTitleSetListener = (OnProjectTitleSetListener) context;
+    } catch (Exception e){
+        Log.e(Tag, "OnAttach: mOnProjectTitleSetListener: " + e.getMessage());
+    }
+
+}
+
+
+    OnProjectTitleSetListener mOnProjectTitleSetListener;
     private static final String Tag = "Fragment4_B1";
     private Button btnNavFrag4b;
     static final int REQUEST_VIDEO_CAPTURE = 103;
-   static final int REQUEST_IMAGE_CAPTURE = 104;
+    static final int REQUEST_IMAGE_CAPTURE = 104;
     public VideoView result_video;
     public Button mPlayButton;
     public ImageView bitmapthumbnail;
@@ -38,6 +61,8 @@ public class Fragment4_B1 extends android.support.v4.app.Fragment implements Fra
     private Uri mImageUri;
     private Bitmap mBitmap;
     private Spinner mSpinner;
+
+    public EditText mMessage1;
 
     String[] CategoryNames={"General Fix", "Appliances","Brick, Concrete, & Stone", "Cleaning", "Drywall",
             "Electric", "Flooring", "Garage", "Junk Removal", "Kitchen",
@@ -62,13 +87,14 @@ public class Fragment4_B1 extends android.support.v4.app.Fragment implements Fra
         result_video = (VideoView) view.findViewById(R.id.videoView2);
     //  bitmapthumbnail = (ImageView) view.findViewById(R.id.bmThumbnail);
         secondimage = (ImageView) view.findViewById(R.id.imageView2);
+        mMessage1 = (EditText) view.findViewById(R.id.title_field);
 
         Fragment1.OnPhotoSelectedLister onPhotoSelectedLister = (Fragment1.OnPhotoSelectedLister) getActivity();
         final Fragment1.OnVideoSelectedLister onVideoSelectedLister = (Fragment1.OnVideoSelectedLister) getActivity();
 
         if (onVideoSelectedLister.setVideopath() == null)
             //  bitmapthumbnail.setImageBitmap(onPhotoSelectedLister.setImageBitmap());
-            secondimage.setImageBitmap(onPhotoSelectedLister.setImageBitmap());
+        secondimage.setImageBitmap(onPhotoSelectedLister.setImageBitmap());
         //        secondimage.setImageURI(onPhotoSelectedLister.setImagePath());
 
 
@@ -121,7 +147,7 @@ public class Fragment4_B1 extends android.support.v4.app.Fragment implements Fra
         });
 
 
-        //Getting the instance of Spinner and applying OnItemSelectedListener on it
+ ////////Getting the instance of Spinner and applying OnItemSelectedListener on it /////////
 
         mSpinner = (Spinner) view.findViewById(R.id.spinner2);
         mSpinner.setOnItemSelectedListener(this);
@@ -134,12 +160,18 @@ public class Fragment4_B1 extends android.support.v4.app.Fragment implements Fra
               navigate to other 'activities', you have to 'getActivity'as seen below*/
 
 
-        //* button 4b placeholder *//
+        //* button 4b placeholder, trying to pass through fragment data when clicked *//
         btnNavFrag4b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getActivity(), "Going to Fragment 4B2", Toast.LENGTH_SHORT).show();
                 ((MainActivity) getActivity()).setViewPager(5);
+                String messagePT = mMessage1.getText().toString();
+                mOnProjectTitleSetListener.setProjectTitle(messagePT);
+
+    //            String messagePT = mMessage1.getText().toString(); /*If there is a message, this will retrieve it*/
+   //             FragmentdataPass.passFragmentdata(messagePT);
+
             }
 
         });
@@ -149,7 +181,7 @@ public class Fragment4_B1 extends android.support.v4.app.Fragment implements Fra
 
     }
 
-
+///////////////////////////////////////////////
 
 
 
@@ -217,7 +249,7 @@ public class Fragment4_B1 extends android.support.v4.app.Fragment implements Fra
     }
 
     @Override
-    public Bitmap setImagePath() {
+    public Uri setImagePath() {
         return null;
     }
 
@@ -238,6 +270,20 @@ public class Fragment4_B1 extends android.support.v4.app.Fragment implements Fra
     }
 
 
+    @Override
+    public void getTextpath(String stringpath1) {
+
+    }
+
+    @Override
+    public String setTextpath() {
+        return null;
+    }
+
+    @Override
+    public void passFragmentdata(String message) {
+
+    }
 }
 
 

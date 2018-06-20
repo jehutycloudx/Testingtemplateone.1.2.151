@@ -17,6 +17,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:tag="fragment4b3tag"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -93,12 +94,16 @@
         android:id="@+id/DateTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:layout_marginLeft="44dp"
-        android:layout_marginStart="44dp"
-        android:gravity="left"
+        android:layout_marginBottom="88dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="50dp"
+        android:gravity="start"
         android:text="Date:"
-        app:layout_constraintBottom_toTopOf="@+id/btnPost"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.069"
         app:layout_constraintStart_toEndOf="@+id/categoryTitle" />
 
     <TextView
@@ -274,3 +279,4 @@
 
 
 </android.support.constraint.ConstraintLayout>
+

@@ -3,23 +3,24 @@
 
 
 
+
     <item
-        android:id="@+id/ic_current_listings"
+        android:id="@+id/ic_current_listings_provider"
         android:icon="@drawable/ic_view_listings_14dp"
         android:title="@string/current_listings"/>
 
     <item
-        android:id="@+id/ic_find_contractor"
-        android:icon="@drawable/ic_person_14dp"
-        android:title="@string/find_contractor"/>
-
-    <item
-        android:id="@+id/ic_chat"
+        android:id="@+id/ic_chat_provider"
         android:icon="@drawable/ic_message_black_14dp"
         android:title="@string/chat"/>
 
     <item
-        android:id="@+id/ic_settings"
+        android:id="@+id/ic_profile_provider"
+        android:icon="@drawable/ic_person_14dp"
+        android:title="Profile"/>
+
+    <item
+        android:id="@+id/ic_settings_provider"
         android:icon="@drawable/ic_settings_icon_14dp"
         android:title="@string/settings"/>
 

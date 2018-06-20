@@ -14,6 +14,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -41,10 +42,10 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-public class Fragment4_B2 extends android.support.v4.app.Fragment implements Fragment1.OnVideoSelectedLister, Fragment1.OnPhotoSelectedLister, AdapterView.OnItemSelectedListener ,
+public class Fragment4_B2 extends android.support.v4.app.Fragment implements Fragment1.OnVideoSelectedLister, Fragment1.OnPhotoSelectedLister, AdapterView.OnItemSelectedListener, Fragment1.OnTextSelectedLister,
         View.OnClickListener, LocationListener,
         GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener{
+        GoogleApiClient.OnConnectionFailedListener, Fragment4_B1.OnProjectTitleSetListener{
 
 
 
@@ -204,7 +205,7 @@ public class Fragment4_B2 extends android.support.v4.app.Fragment implements Fra
     }
 
     @Override
-    public Bitmap setImagePath() {
+    public Uri setImagePath() {
         return null;
     }
 
@@ -398,6 +399,21 @@ public class Fragment4_B2 extends android.support.v4.app.Fragment implements Fra
            }
 
        }
+    }
+
+    @Override
+    public void getTextpath(String stringpath1) {
+
+    }
+
+    @Override
+    public String setTextpath() {
+        return null;
+    }
+
+    @Override
+    public void setProjectTitle(String projectTitle) {
+
     }
 }
 

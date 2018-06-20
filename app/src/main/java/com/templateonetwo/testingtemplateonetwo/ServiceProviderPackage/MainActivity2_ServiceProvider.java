@@ -1,4 +1,4 @@
-package com.templateonetwo.testingtemplateonetwo;
+package com.templateonetwo.testingtemplateonetwo.ServiceProviderPackage;
 
 import android.Manifest;
 import android.content.Context;
@@ -11,7 +11,6 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
@@ -22,20 +21,34 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.templateonetwo.testingtemplateonetwo.Utils.FragmentdataPass;
+import com.templateonetwo.testingtemplateonetwo.Activity_Chat;
+import com.templateonetwo.testingtemplateonetwo.Activity_Current_Listings;
+import com.templateonetwo.testingtemplateonetwo.Activity_Find_Contractors;
+import com.templateonetwo.testingtemplateonetwo.Activity_Settings;
+import com.templateonetwo.testingtemplateonetwo.BottomNavigationViewHelper;
+import com.templateonetwo.testingtemplateonetwo.Fragment1;
+import com.templateonetwo.testingtemplateonetwo.Fragment2;
+import com.templateonetwo.testingtemplateonetwo.Fragment3;
+import com.templateonetwo.testingtemplateonetwo.Fragment4_A1;
+import com.templateonetwo.testingtemplateonetwo.Fragment4_B1;
+import com.templateonetwo.testingtemplateonetwo.Fragment4_B2;
+import com.templateonetwo.testingtemplateonetwo.Fragment4_B3;
+import com.templateonetwo.testingtemplateonetwo.R;
 import com.templateonetwo.testingtemplateonetwo.Utils.SectionsStatePagerAdapter;
 import com.templateonetwo.testingtemplateonetwo.Utils.UniversalImageLoader;
 
 
-public  class MainActivity extends AppCompatActivity implements Fragment1.OnPhotoSelectedLister,Fragment1.OnVideoSelectedLister,Fragment1.OnTextSelectedLister, Fragment4_B1.OnProjectTitleSetListener {
+public  class MainActivity2_ServiceProvider extends AppCompatActivity implements Fragment1.OnPhotoSelectedLister,Fragment1.OnVideoSelectedLister,Fragment1.OnTextSelectedLister, Fragment4_B1.OnProjectTitleSetListener {
 
-    private static final String TAG = "MainActivity";
-    private static final String TAG2 = "Fragment4_B3";
-    private static final int REQUEST_CODE_P = 123;
-    private static final int ACTIVITY_NUM = 0;
-    private Context mContext = MainActivity.this;
+    /*This class serves as the Main Activity for the Service Provider User Path*/
+
+
+    private static final String TAG = "MainActivity_Provider";
+    private static final int REQUEST_CODE_P = 124;
+    private static final int ACTIVITY_NUM = 2;
+    private Context mContext = MainActivity2_ServiceProvider.this;
     private TextView mToolbarTitle;
-    Fragment mfragment4 = new Fragment4_B3();
+
 
     Uri uri;
     Uri mUri; /*just adding this to make the below code work for interface*/
@@ -48,7 +61,7 @@ public  class MainActivity extends AppCompatActivity implements Fragment1.OnPhot
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.p_activity_main_provider);
         Log.d(TAG, "onCreate: Started.");
         mToolbarTitle = findViewById(R.id.profilenameTitletoolbar);
 
@@ -67,48 +80,47 @@ public  class MainActivity extends AppCompatActivity implements Fragment1.OnPhot
         //setup the pager below
 
         /*code below is to specifically disable shiftmode on bottom nav bar*/
-        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavView_Bar);
-        BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
+        BottomNavigationView bottomNavigationView2 = (BottomNavigationView) findViewById(R.id.bottomNavView_Bar2);
+        BottomNavigationViewHelper.disableShiftMode(bottomNavigationView2);
 
         /*simple code to fix the highlighting of the appropriate bottom nav icon when tapped, menu item index is set to '0' for first icon*/
-        Menu menu = bottomNavigationView.getMenu();
-        MenuItem menuItem = menu.getItem(0);
-        menuItem.setChecked(true);
+        Menu menu2 = bottomNavigationView2.getMenu();
+        MenuItem menuItem2 = menu2.getItem(0);
+        menuItem2.setChecked(true);
 
 
         /*below you will need to navigate to different areas when the nav buttons are pressed and you
           will need to use switch statements, breaks, and the code below */
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        bottomNavigationView2.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
 
-                    case R.id.ic_new_project:
-                        Intent intent0 = new Intent(MainActivity.this, MainActivity.class);
-                        startActivity(intent0);
-                        break;
+        //          case R.id.ic_new_project:
+        //              Intent intent0 = new Intent(MainActivity2_ServiceProvider.this, MainActivity2_ServiceProvider.class);
+        //              startActivity(intent0);
+        //              break;
 
                     case R.id.ic_current_listings:
-                        Intent intent1 = new Intent(MainActivity.this, Activity_Current_Listings.class);
+                        Intent intent1 = new Intent(MainActivity2_ServiceProvider.this, Activity_Provider_Current_Listings.class);
                         startActivity(intent1);
                         break;
 
 
-                    case R.id.ic_find_contractor:
-                        Intent intent2 = new Intent(MainActivity.this, Activity_Find_Contractors.class);
+                    case R.id.ic_chat_provider:
+                        Intent intent2 = new Intent(MainActivity2_ServiceProvider.this, Activity_Provider_Chat.class);
                         startActivity(intent2);
+
                         break;
 
-
-                    case R.id.ic_chat:
-                        Intent intent3 = new Intent(MainActivity.this, Activity_Chat.class);
+                    case R.id.ic_profile_provider:
+                        Intent intent3 = new Intent(MainActivity2_ServiceProvider.this, Activity_Provider_Profile.class);
                         startActivity(intent3);
-
                         break;
 
 
-                    case R.id.ic_settings:
-                        Intent intent4 = new Intent(MainActivity.this, Activity_Settings.class);
+                    case R.id.ic_settings_provider:
+                        Intent intent4 = new Intent(MainActivity2_ServiceProvider.this, Activity_Provider_Settings.class);
                         startActivity(intent4);
 
                         break;
@@ -174,7 +186,7 @@ public  class MainActivity extends AppCompatActivity implements Fragment1.OnPhot
                 ) {
             setupViewPager(mViewPager);   /*I presume mViewPager can go here...just assuming, may need to fix*/
         } else {
-            ActivityCompat.requestPermissions(MainActivity.this, permissions,
+            ActivityCompat.requestPermissions(MainActivity2_ServiceProvider.this, permissions,
                     REQUEST_CODE_P);
         } /*above is just taking the result and we will put it in the below,
         'onRequestPermissionResult...'*/
@@ -199,12 +211,6 @@ public  class MainActivity extends AppCompatActivity implements Fragment1.OnPhot
         }
 
     }
-
-
-
-
-
-
 
 
 
