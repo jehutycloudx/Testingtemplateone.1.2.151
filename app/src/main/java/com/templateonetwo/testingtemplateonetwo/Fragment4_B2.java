@@ -14,7 +14,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -35,6 +34,8 @@ import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.templateonetwo.testingtemplateonetwo.Utils.CommonUtils;
+import com.templateonetwo.testingtemplateonetwo.Utils.FragmentModelDataPasssing;
 
 
 import java.io.IOException;
@@ -53,7 +54,7 @@ public class Fragment4_B2 extends android.support.v4.app.Fragment implements Fra
     private Button btnNavFrag4b2;
     private Button btnNexttoReview; //getAddress;
     private ImageView getAddress;
-    EditText address;
+    EditText mLocation;
 
 
     public TextView mTimefield;
@@ -94,7 +95,7 @@ public class Fragment4_B2 extends android.support.v4.app.Fragment implements Fra
         mTimefield = (TextView) view.findViewById(R.id.Timefield);
         mDatefield = (TextView) view.findViewById(R.id.Datefield);
         getAddress =(ImageView)view.findViewById(R.id.retrievelocationButton);
-        address =(EditText)view.findViewById(R.id.editText5);
+        mLocation =(EditText)view.findViewById(R.id.editText5);
         getAddress.setOnClickListener(this);
         mDatefield.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -154,7 +155,14 @@ public class Fragment4_B2 extends android.support.v4.app.Fragment implements Fra
             @Override
             public void onClick(View view) {
                 Toast.makeText(getActivity(), "Going to Fragment 4B3", Toast.LENGTH_SHORT).show();
+                FragmentModelDataPasssing fragmentModelDataPasssing= CommonUtils.getFragmentData(getActivity());
+                fragmentModelDataPasssing.setDate(mDatefield.getText().toString());
+                fragmentModelDataPasssing.setLocation(mLocation.getText().toString());
+                fragmentModelDataPasssing.setTime(mTimefield.getText().toString());
+                CommonUtils.saveFragmentData(getActivity(),fragmentModelDataPasssing);
+
                 ((MainActivity) getActivity()).setViewPager(6);
+                ((MainActivity) getActivity()).passFragmentdata(fragmentModelDataPasssing);
             }
 
         });
@@ -271,7 +279,7 @@ public class Fragment4_B2 extends android.support.v4.app.Fragment implements Fra
     }
 
     protected void createLocationRequest() {
-        mLocationRequest = new LocationRequest();
+        mLocationRequest = LocationRequest.create();
         mLocationRequest.setInterval(INTERVAL);
         mLocationRequest.setFastestInterval(FASTEST_INTERVAL);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
@@ -387,13 +395,13 @@ public class Fragment4_B2 extends android.support.v4.app.Fragment implements Fra
                addresses = geocoder.getFromLocation(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude(), 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
 
 
-           String addressa = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+           String addressa = addresses.get(0).getAddressLine(0); // If any additional mLocation line present than only, check with max available mLocation lines by getMaxAddressLineIndex()
            String city = addresses.get(0).getLocality();
            String state = addresses.get(0).getAdminArea();
            String country = addresses.get(0).getCountryName();
            String postalCode = addresses.get(0).getPostalCode();
            String knownName = addresses.get(0).getFeatureName();
-           address.setText(addressa);
+           mLocation.setText(addressa);
            } catch (IOException e) {
                e.printStackTrace();
            }

@@ -20,15 +20,20 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import com.google.gson.Gson;
+import com.templateonetwo.testingtemplateonetwo.Utils.CommonUtils;
+import com.templateonetwo.testingtemplateonetwo.Utils.FragmentModelDataPasssing;
 import com.templateonetwo.testingtemplateonetwo.Utils.FragmentdataPass;
 import com.templateonetwo.testingtemplateonetwo.Utils.UniversalImageLoader;
 
 import static android.media.ThumbnailUtils.extractThumbnail;
 
-public class Fragment4_B1 extends android.support.v4.app.Fragment implements Fragment1.OnVideoSelectedLister, Fragment1.OnPhotoSelectedLister, AdapterView.OnItemSelectedListener,Fragment1.OnTextSelectedLister, FragmentdataPass {
+public class Fragment4_B1 extends android.support.v4.app.Fragment implements Fragment1.OnVideoSelectedLister, Fragment1.OnPhotoSelectedLister, AdapterView.OnItemSelectedListener,Fragment1.OnTextSelectedLister {
 
 
-public interface OnProjectTitleSetListener {
+
+
+    public interface OnProjectTitleSetListener {
 
     public void setProjectTitle (String projectTitle);
 
@@ -61,8 +66,11 @@ public void onAttach(Context context) {  /*might need to change to Activity acti
     private Uri mImageUri;
     private Bitmap mBitmap;
     private Spinner mSpinner;
+    String selectedCategory="";
 
     public EditText mMessage1;
+    public EditText mDescription;
+
 
     String[] CategoryNames={"General Fix", "Appliances","Brick, Concrete, & Stone", "Cleaning", "Drywall",
             "Electric", "Flooring", "Garage", "Junk Removal", "Kitchen",
@@ -88,6 +96,7 @@ public void onAttach(Context context) {  /*might need to change to Activity acti
     //  bitmapthumbnail = (ImageView) view.findViewById(R.id.bmThumbnail);
         secondimage = (ImageView) view.findViewById(R.id.imageView2);
         mMessage1 = (EditText) view.findViewById(R.id.title_field);
+        mDescription= (EditText) view.findViewById(R.id.description_field);
 
         Fragment1.OnPhotoSelectedLister onPhotoSelectedLister = (Fragment1.OnPhotoSelectedLister) getActivity();
         final Fragment1.OnVideoSelectedLister onVideoSelectedLister = (Fragment1.OnVideoSelectedLister) getActivity();
@@ -165,6 +174,11 @@ public void onAttach(Context context) {  /*might need to change to Activity acti
             @Override
             public void onClick(View view) {
                 Toast.makeText(getActivity(), "Going to Fragment 4B2", Toast.LENGTH_SHORT).show();
+                FragmentModelDataPasssing fragmentModelDataPasssing=CommonUtils.getFragmentData(getActivity());
+                fragmentModelDataPasssing.setCategory(selectedCategory);
+                fragmentModelDataPasssing.setDescription(mDescription.getText().toString());
+                fragmentModelDataPasssing.setTitle(mMessage1.getText().toString());
+                CommonUtils.saveFragmentData(getActivity(),fragmentModelDataPasssing);
                 ((MainActivity) getActivity()).setViewPager(5);
                 String messagePT = mMessage1.getText().toString();
                 mOnProjectTitleSetListener.setProjectTitle(messagePT);
@@ -181,6 +195,7 @@ public void onAttach(Context context) {  /*might need to change to Activity acti
 
     }
 
+
 ///////////////////////////////////////////////
 
 
@@ -188,11 +203,14 @@ public void onAttach(Context context) {  /*might need to change to Activity acti
 /*Needed for this class to implement spinner class methods in order to work*/
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        selectedCategory=CategoryNames[position];
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
     }
+
+
 
 
 
@@ -235,6 +253,17 @@ public void onAttach(Context context) {  /*might need to change to Activity acti
 
         }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+    }
 
     @Override
     public void getImageBitmap(Bitmap bitmap) {
@@ -280,10 +309,7 @@ public void onAttach(Context context) {  /*might need to change to Activity acti
         return null;
     }
 
-    @Override
-    public void passFragmentdata(String message) {
 
-    }
 }
 
 

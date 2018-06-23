@@ -3,6 +3,7 @@ package com.templateonetwo.testingtemplateonetwo;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,7 +16,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
-public class Fragment4_B3 extends android.support.v4.app.Fragment implements Fragment1.OnVideoSelectedLister, Fragment1.OnPhotoSelectedLister, AdapterView.OnItemSelectedListener, Fragment4_B1.OnProjectTitleSetListener {
+import com.templateonetwo.testingtemplateonetwo.Utils.CommonUtils;
+import com.templateonetwo.testingtemplateonetwo.Utils.FragmentDataReceive;
+import com.templateonetwo.testingtemplateonetwo.Utils.FragmentModelDataPasssing;
+
+public class Fragment4_B3 extends android.support.v4.app.Fragment implements Fragment1.OnVideoSelectedLister, Fragment1.OnPhotoSelectedLister, AdapterView.OnItemSelectedListener, Fragment4_B1.OnProjectTitleSetListener,FragmentDataReceive {
 
 
 
@@ -251,6 +256,31 @@ public class Fragment4_B3 extends android.support.v4.app.Fragment implements Fra
     @Override
     public void setProjectTitle(String projectTitle) {
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+      //  FragmentModelDataPasssing fragmentModelDataPasssing= CommonUtils.getFragmentData(getActivity());
+
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+    }
+
+    @Override
+    public void receiveData(FragmentModelDataPasssing fragmentModelDataPasssing) {
+        if(fragmentModelDataPasssing!=null) {
+            mProjecttitle3.setText(fragmentModelDataPasssing.getTitle());
+            mDescription3.setText(fragmentModelDataPasssing.getDescription());
+            mCategoryfield3.setText(fragmentModelDataPasssing.getCategory());
+            mDatefield3.setText(fragmentModelDataPasssing.getDate());
+            mLocationfield3.setText(fragmentModelDataPasssing.getLocation());
+            mTimefield3.setText(fragmentModelDataPasssing.getTime());
+        }
     }
 }
 

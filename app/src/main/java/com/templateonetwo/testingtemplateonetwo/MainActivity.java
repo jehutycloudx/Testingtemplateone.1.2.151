@@ -19,23 +19,32 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Adapter;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.templateonetwo.testingtemplateonetwo.Utils.CommonUtils;
+import com.templateonetwo.testingtemplateonetwo.Utils.FragmentModelDataPasssing;
 import com.templateonetwo.testingtemplateonetwo.Utils.FragmentdataPass;
+import com.templateonetwo.testingtemplateonetwo.Utils.SectionsPagerAdapter;
 import com.templateonetwo.testingtemplateonetwo.Utils.SectionsStatePagerAdapter;
 import com.templateonetwo.testingtemplateonetwo.Utils.UniversalImageLoader;
 
 
-public  class MainActivity extends AppCompatActivity implements Fragment1.OnPhotoSelectedLister,Fragment1.OnVideoSelectedLister,Fragment1.OnTextSelectedLister, Fragment4_B1.OnProjectTitleSetListener {
+public  class MainActivity extends AppCompatActivity implements Fragment1.OnPhotoSelectedLister,Fragment1.OnVideoSelectedLister,Fragment1.OnTextSelectedLister, Fragment4_B1.OnProjectTitleSetListener,FragmentdataPass {
 
     private static final String TAG = "MainActivity";
     private static final String TAG2 = "Fragment4_B3";
     private static final int REQUEST_CODE_P = 123;
     private static final int ACTIVITY_NUM = 0;
     private Context mContext = MainActivity.this;
+    RelativeLayout mRelativeLayout;
     private TextView mToolbarTitle;
     Fragment mfragment4 = new Fragment4_B3();
+    FragmentModelDataPasssing mFragmentModelDataPasssing;
 
     Uri uri;
     Uri mUri; /*just adding this to make the below code work for interface*/
@@ -50,6 +59,7 @@ public  class MainActivity extends AppCompatActivity implements Fragment1.OnPhot
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.d(TAG, "onCreate: Started.");
+
         mToolbarTitle = findViewById(R.id.profilenameTitletoolbar);
 
         initImageLoader();
@@ -57,7 +67,7 @@ public  class MainActivity extends AppCompatActivity implements Fragment1.OnPhot
         mSectionsStatePagerAdapter = new SectionsStatePagerAdapter(getSupportFragmentManager());
         /* create view pager object above ^^ as that is what we will be referencing*/
 
-        mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager = (ViewPager) findViewById(R.id.viewpager);
         verifyPermissions();
         /* setupViewPager(mViewPager);   --->this code is removed and replaced with 'verifyPermissions();'
         above as we want to have the permissions be requested before anything else is setup in app.
@@ -120,7 +130,7 @@ public  class MainActivity extends AppCompatActivity implements Fragment1.OnPhot
     }
         /* each of these correspond to a number i.e. '0','1', '2', when referencing fragments */
     private void setupViewPager(ViewPager viewPager) {
-        SectionsStatePagerAdapter adapter = new SectionsStatePagerAdapter(getSupportFragmentManager());
+        final SectionsStatePagerAdapter adapter = new SectionsStatePagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new Fragment1(), "Fragment1");  /*Fragment number '0'*/
         adapter.addFragment(new Fragment2(), "Fragment2");  /*Fragment number '1'*/
         adapter.addFragment(new Fragment3(), "Fragment3");  /*Fragment number '2'*/
@@ -129,7 +139,43 @@ public  class MainActivity extends AppCompatActivity implements Fragment1.OnPhot
         adapter.addFragment(new Fragment4_B2(), "Fragment4_B2"); /*Fragment number '5'*/
         adapter.addFragment(new Fragment4_B3(), "Fragment4_B3"); /*Fragment number '6'*/
         viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                       //   MaleLocation1 maleLocation1 = (MaleLocation1) getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.viewpager + ":" + viewPager.getCurrentItem());
+                switch (position)
+                {
+                    case 6:
+                        String tag = "android:switcher:" + R.id.viewpager + ":" + mViewPager.getCurrentItem();
+                        //  Fragment4_B3 f = (Fragment4_B3) getSupportFragmentManager().findFragmentByTag(tag);
+
+                }
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+        mViewPager.setOnTouchListener(new View.OnTouchListener()
+        {
+            @Override
+            public boolean onTouch(View v, MotionEvent event)
+            {
+                return true;
+            }
+        });
+
+       // mViewPager.beginFakeDrag();
     }
+
+
 
     public void gotoFragment(int i)
     {
@@ -263,6 +309,13 @@ public  class MainActivity extends AppCompatActivity implements Fragment1.OnPhot
     //  findFragmentByTag is not a possibility either yet, Need assistance with creating pass through method.
     //  passtofrag4b3.updateinfoPT(projectTitle);
 
+    }
+
+    @Override
+    public void passFragmentdata(FragmentModelDataPasssing message) {
+        SectionsStatePagerAdapter adapter=(SectionsStatePagerAdapter)mViewPager.getAdapter();
+        Fragment4_B3 f = (Fragment4_B3)adapter.mFragmentList.get(6);
+        f.receiveData(message);
     }
 
 
