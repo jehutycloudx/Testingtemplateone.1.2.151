@@ -24,6 +24,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,6 +58,7 @@ public class Fragment4_B2 extends android.support.v4.app.Fragment implements Fra
     EditText mLocation;
 
 
+    public Switch mSwitch;
     public TextView mTimefield;
 
     public TextView mDatefield;
@@ -96,8 +98,10 @@ public class Fragment4_B2 extends android.support.v4.app.Fragment implements Fra
         mDatefield = (TextView) view.findViewById(R.id.Datefield);
         getAddress =(ImageView)view.findViewById(R.id.retrievelocationButton);
         mLocation =(EditText)view.findViewById(R.id.editText5);
+        mSwitch = (Switch)view.findViewById(R.id.SwitchValuefrag3);
         getAddress.setOnClickListener(this);
         mDatefield.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 Calendar mcalendar = Calendar.getInstance();
@@ -159,6 +163,7 @@ public class Fragment4_B2 extends android.support.v4.app.Fragment implements Fra
                 fragmentModelDataPasssing.setDate(mDatefield.getText().toString());
                 fragmentModelDataPasssing.setLocation(mLocation.getText().toString());
                 fragmentModelDataPasssing.setTime(mTimefield.getText().toString());
+            //  fragmentModelDataPasssing.setSwitchValue(mSwitch.getText().toString());
                 CommonUtils.saveFragmentData(getActivity(),fragmentModelDataPasssing);
 
                 ((MainActivity) getActivity()).setViewPager(6);
@@ -174,6 +179,8 @@ public class Fragment4_B2 extends android.support.v4.app.Fragment implements Fra
 /*Needed for this class to implement spinner class methods in order to work*/
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+
     }
 
     @Override
@@ -293,6 +300,7 @@ public class Fragment4_B2 extends android.support.v4.app.Fragment implements Fra
     protected void startLocationUpdates() {
         PendingResult<Status> pendingResult = LocationServices.FusedLocationApi.requestLocationUpdates(
                 mGoogleApiClient, mLocationRequest, this);
+
 
         /*This will need to check for permission, may be red but will still work, put in code to check
           location permissions. */

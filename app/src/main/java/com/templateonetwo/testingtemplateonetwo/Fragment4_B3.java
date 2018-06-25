@@ -34,6 +34,7 @@ public class Fragment4_B3 extends android.support.v4.app.Fragment implements Fra
     public TextView mCategoryfield3;
     public TextView mProjecttitle3;
     public TextView mDescription3;
+    public TextView mSwitch3;
 
     public VideoView result_video;
     public ImageView secondimage;
@@ -79,13 +80,13 @@ public class Fragment4_B3 extends android.support.v4.app.Fragment implements Fra
         final View view = inflater.inflate(R.layout.fragment4_b3_layout_video_path, container, false);
 
         mProjecttitle3 = (TextView) view.findViewById(R.id.titleProjectName3);
-        mProjecttitle3.setVisibility(View.GONE);
-        mDescription3 = (TextView) view.findViewById(R.id.textViewDescription3);
+        mDescription3 = (TextView) view.findViewById(R.id.title_field3);
 
         mTimefield3 = (TextView) view.findViewById(R.id.TimePostText);
         mDatefield3 = (TextView) view.findViewById(R.id.DatePostText);
         mLocationfield3 = (TextView) view.findViewById(R.id.LocationPostText);
         mCategoryfield3 = (TextView) view.findViewById(R.id.CategoryPostText);
+        mSwitch3 = (TextView) view.findViewById(R.id.SwitchValuefrag3);
 
         btnbacktoNavFrag4b2 = (Button) view.findViewById(R.id.btnbackto4b2);
         btnPost = (Button) view.findViewById(R.id.btnPost);
@@ -280,6 +281,7 @@ public class Fragment4_B3 extends android.support.v4.app.Fragment implements Fra
             mDatefield3.setText(fragmentModelDataPasssing.getDate());
             mLocationfield3.setText(fragmentModelDataPasssing.getLocation());
             mTimefield3.setText(fragmentModelDataPasssing.getTime());
+         // mSwitch3.setText(fragmentModelDataPasssing.getSwitchValue());
         }
     }
 }
