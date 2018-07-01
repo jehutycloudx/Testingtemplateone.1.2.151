@@ -1,11 +1,13 @@
 package com.templateonetwo.testingtemplateonetwo;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,6 +18,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 import android.widget.VideoView;
+
+import com.templateonetwo.testingtemplateonetwo.Utils.CommonUtils;
+import com.templateonetwo.testingtemplateonetwo.Utils.CommonUtils2;
+import com.templateonetwo.testingtemplateonetwo.Utils.FileUtils;
+
+import java.io.File;
 
 
 public class Fragment1 extends android.support.v4.app.Fragment {
@@ -188,7 +196,8 @@ public class Fragment1 extends android.support.v4.app.Fragment {
                 Toast.makeText(getActivity(), "Using Camera Image", Toast.LENGTH_SHORT).show();
                 /* Use 'Intent' here since this is a activity you wish to navigate from*/
                 Intent intentCamImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intentCamImage, CAMERA_FILE_REQUEST_CODE);
+               // startActivityForResult(intentCamImage, CAMERA_FILE_REQUEST_CODE);
+                openCamera();
                 /*testing*/
 
                 //setTargetFragment(new Fragment4_B1(), 5); /*based on video, the integer here doesnt not have to equal the CAMERA_FILE_REQUEST_CODE, it can be a random integer as you are sending this data to next frag*/
@@ -213,6 +222,25 @@ public class Fragment1 extends android.support.v4.app.Fragment {
         return view;
 
     }
+    Uri fileUri;
+
+    private void openCamera() {
+        MainActivity mActivity=(MainActivity)getActivity();
+        File saveFilePath = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + mActivity.getPackageName());
+        if (!saveFilePath.exists()) {
+            saveFilePath.mkdirs();
+        }
+        String fileName = "Lime_IMG_" + System.currentTimeMillis() + ".jpg";
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.Images.Media.TITLE, fileName);
+        MainActivity mainActivity=(MainActivity)getActivity();
+        fileUri = mainActivity.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
+        startActivityForResult(intent, CAMERA_FILE_REQUEST_CODE);
+    }
 
     Fragment mFragment4B1 = new Fragment4_B1();
 
@@ -226,12 +254,15 @@ public class Fragment1 extends android.support.v4.app.Fragment {
 
         if (requestCode == PICK_FILE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             Uri selectedImageUri = data.getData();
+            String path = FileUtils.getPath(getActivity(), selectedImageUri);
+            Bitmap bitmap = CommonUtils2.handleSamplingAndRotationBitmap(path);
             Log.d(Tag, "onActivityResult image uri:, Uploading Media from Gallery " + selectedImageUri);
 
             //Send the uri to PostFragment or Posting page/area
 
             if (mOnPhotoSelectedLister != null || mOnVideoSelectedLister !=null)
-            mOnPhotoSelectedLister.getImagePath(selectedImageUri);
+            mOnPhotoSelectedLister.getImageBitmap(bitmap);
+           // mOnVideoSelectedLister.getVideopath(selectedImageUri);
             MainActivity mainActivity=(MainActivity)getActivity();
             mainActivity.gotoFragment(4);
            // fragmentx.setTargetFragment(this, requestCode);
@@ -244,16 +275,25 @@ public class Fragment1 extends android.support.v4.app.Fragment {
 
         else if (requestCode == CAMERA_FILE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             Log.d(Tag, "onActivity Result: done taking new photo");
-            Bitmap bitmapimage;
-            bitmapimage = (Bitmap) data.getExtras().get("data");
-            mOnPhotoSelectedLister.getImageBitmap(bitmapimage);
-            mOnVideoSelectedLister.getVideopath(null);
-            MainActivity mainActivity=(MainActivity)getActivity();
-            mainActivity.gotoFragment(4);
 
+            try {
+                Bitmap bitmapimage=null;
+                String path = FileUtils.getPath(getActivity(), fileUri);
+                Bitmap bitmap = CommonUtils2.handleSamplingAndRotationBitmap(path);
+
+
+                bitmapimage = bitmap;
+                mOnPhotoSelectedLister.getImageBitmap(bitmapimage);
+                mOnVideoSelectedLister.getVideopath(null);
+                MainActivity mainActivity = (MainActivity) getActivity();
+                mainActivity.gotoFragment(4);
+
+        } catch (Exception  ew) {
+            //Crashlytics.logException(e);
+        }
             //Send the bitmapimage to PostFragment or Posting page/area
-           if (mOnPhotoSelectedLister != null)
-            mOnPhotoSelectedLister.getImageBitmap(bitmapimage);
+           //if (mOnPhotoSelectedLister != null)
+           // mOnPhotoSelectedLister.getImageBitmap(bitmapimage);
           //  fragmentx.setTargetFragment(this, requestCode);
             /*or try setting here*/ // setTargetFragment(fragmentx,CAMERA_FILE_REQUEST_CODE);
 

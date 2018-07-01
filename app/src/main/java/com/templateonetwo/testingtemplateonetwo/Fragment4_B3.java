@@ -20,6 +20,8 @@ import com.templateonetwo.testingtemplateonetwo.Utils.CommonUtils;
 import com.templateonetwo.testingtemplateonetwo.Utils.FragmentDataReceive;
 import com.templateonetwo.testingtemplateonetwo.Utils.FragmentModelDataPasssing;
 
+import static android.text.TextUtils.isEmpty;
+
 public class Fragment4_B3 extends android.support.v4.app.Fragment implements Fragment1.OnVideoSelectedLister, Fragment1.OnPhotoSelectedLister, AdapterView.OnItemSelectedListener, Fragment4_B1.OnProjectTitleSetListener,FragmentDataReceive {
 
 
@@ -52,19 +54,6 @@ public class Fragment4_B3 extends android.support.v4.app.Fragment implements Fra
             "Plumbing & Bathroom", "Remodeling", "Roofing & Gutters", "Siding",
             "Windows", "Other" };
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        Bundle bundle = this.getArguments();
-        if (bundle != null) {
-            mIncomingMessage_ProjectTitle = bundle.getString(getString(R.string.project_title_optional));
-
-
-        }
-
-
-    }
 
 
 /*below is auto-generate code from right clicking and inserting 'OnCreateView', this method
@@ -72,7 +61,14 @@ public class Fragment4_B3 extends android.support.v4.app.Fragment implements Fra
     You also have to create View objects and return at the bottom of onCreateView
      Deleted the 'super return...' code line */
 
+    //4:28 Classifieds: Compressing images in Android
+    private void uploadNewphoto(Uri Viduri){
 
+    }
+
+    private void uploadNewphoto(Bitmap bitmap){
+
+    }
 
     @Nullable
     @Override
@@ -113,9 +109,43 @@ public class Fragment4_B3 extends android.support.v4.app.Fragment implements Fra
             public void onClick(View view) {
                 Toast.makeText(getActivity(), "Going to Fragment 4B3", Toast.LENGTH_SHORT).show();
                 ((MainActivity) getActivity()).setViewPager(7);
+                Log.d(Tag4b3, "onClick: Attempting to post...");
+                if(!isEmpty(mProjecttitle3.getText().toString())
+                   && !isEmpty(mDescription3.getText().toString())
+                   && !isEmpty(mCategoryfield3.getText().toString())
+                   && !isEmpty(mLocationfield3.getText().toString())
+                   && !isEmpty(mDatefield3.getText().toString())
+                   && !isEmpty(mTimefield3.getText().toString())) {
+
+                    //we have a Uri and no bitmap
+                if(result_video != null && secondimage == null){
+                    uploadNewphoto(setVideopath());
+
+                }
+                //we have no Uri and a bitmap
+                else if (result_video == null && secondimage !=null) {
+                    uploadNewphoto(setImagePath());
+                    /*setVideopath and setImagePath may need to be fixed
+                    as they may not refer to the right data being stored for
+                    transfer*/
+                }
+            }
+
+            else{
+                Toast.makeText(getActivity(), "You must fill out all the fields", Toast.LENGTH_SHORT).show();
+
+
+
+                }
             }
 
         });
+
+
+
+
+
+
 
      /* Image and Video placement, for review, should be same as fragment 1 and is placed
            as same time as fragment 1*////////////////////
@@ -152,19 +182,20 @@ public class Fragment4_B3 extends android.support.v4.app.Fragment implements Fra
             }
         });
 
-
-
-
 //        setIncomingMessage_ProjectTitle();
         /* */////////////////////////////
 
 
         return view;
     }
+
 /*May need to use 'onEditerActionListener' or some other listener to set text on 4b3 from 4b1 when typed...usually you use
   onClickListener but...it would make more since if you had seperate fragments instead of a
     viewpager...that way, when you click 'Next', the data could be passed through via onClick, but
     regardless, we will try another method to cope*/
+
+
+
 
 
 /*Needed for this class to implement spinner class methods in order to work*/

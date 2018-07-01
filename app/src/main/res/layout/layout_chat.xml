@@ -82,7 +82,7 @@
                     android:layout_centerVertical="true"
                     android:text="Chat"
                     android:textSize="20sp"
-                    android:textColor="@color/wallet_holo_blue_light"
+                    android:textColor="@color/MegamanBlue"
                     android:id="@+id/profilenameTitletoolbar"/>
 
 

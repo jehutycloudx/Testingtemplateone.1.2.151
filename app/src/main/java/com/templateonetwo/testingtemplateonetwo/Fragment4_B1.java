@@ -70,6 +70,7 @@ public void onAttach(Context context) {  /*might need to change to Activity acti
 
     public EditText mMessage1;
     public EditText mDescription;
+    boolean isFit=true;
 
 
     String[] CategoryNames={"General Fix", "Appliances","Brick, Concrete, & Stone", "Cleaning", "Drywall",
@@ -101,14 +102,30 @@ public void onAttach(Context context) {  /*might need to change to Activity acti
         Fragment1.OnPhotoSelectedLister onPhotoSelectedLister = (Fragment1.OnPhotoSelectedLister) getActivity();
         final Fragment1.OnVideoSelectedLister onVideoSelectedLister = (Fragment1.OnVideoSelectedLister) getActivity();
 
-        if (onVideoSelectedLister.setVideopath() == null)
+        if (onVideoSelectedLister.setVideopath() == null) {
             //  bitmapthumbnail.setImageBitmap(onPhotoSelectedLister.setImageBitmap());
-        secondimage.setImageBitmap(onPhotoSelectedLister.setImageBitmap());
-        //        secondimage.setImageURI(onPhotoSelectedLister.setImagePath());
+            secondimage.setImageBitmap(onPhotoSelectedLister.setImageBitmap());
+            //        secondimage.setImageURI(onPhotoSelectedLister.setImagePath());
 
+          result_video.setVisibility(View.GONE);
+          secondimage.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+                  if(!isFit)
+                  {
+                      secondimage.setScaleType(ImageView.ScaleType.FIT_XY);
+                  }
+                  else
+                  {
+                      secondimage.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                  }
+                  isFit=!isFit;
 
-
+              }
+          });
+        }
         else  {
+            secondimage.setVisibility(View.GONE);
             Uri Viduri = onVideoSelectedLister.setVideopath();
             //     String [] filePathColumn = {MediaStore.Images.Media.DATA};
             //String path=uri.getPath(); so this was removed

@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.templateonetwo.testingtemplateonetwo.R;
@@ -20,12 +21,14 @@ public class EditProfileFragment extends Fragment {
     private static final String TAG = "EditProifleFragment";
 
     private ImageView mProfilePhoto;
+    private TextView mEditProfilePhoto;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.layout_setting_fragment_editprofile, container, false);
         mProfilePhoto = (ImageView) view.findViewById(R.id.profile_photo);
+        mEditProfilePhoto = (TextView) view.findViewById(R.id.changeProfilePhoto);
 
 
         setProfileImage();

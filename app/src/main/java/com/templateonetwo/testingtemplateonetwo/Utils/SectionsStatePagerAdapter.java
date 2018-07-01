@@ -9,6 +9,7 @@ import com.templateonetwo.testingtemplateonetwo.Utils.SectionsPagerAdapter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Stack;
 
 /* you created a new class, then you 'extends' the 'FragementStatePagerAdapter' from the developer
  android site, once inputted, you will see it's red, click alt+enter and you can see what
@@ -28,6 +29,9 @@ public class SectionsStatePagerAdapter extends FragmentStatePagerAdapter {
     private final HashMap<String, Integer> mFragmentNumbers = new HashMap<>();
     private final HashMap<Integer, String> mFragmentNames = new HashMap<>();
     private final List<String> mFragmentTitleList = new ArrayList<>();
+    Stack<Integer> pageHistory;
+    boolean saveToHistory;
+
 
     public SectionsStatePagerAdapter(FragmentManager fm) {
         super(fm);

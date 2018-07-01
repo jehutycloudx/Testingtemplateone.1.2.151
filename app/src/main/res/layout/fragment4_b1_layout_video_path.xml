@@ -202,6 +202,7 @@
 
         <ImageView
             android:id="@+id/imageView2"
+            android:scaleType="fitXY"
             android:layout_width="250dp"
             android:layout_height="200dp"
             android:layout_marginBottom="15dp"
