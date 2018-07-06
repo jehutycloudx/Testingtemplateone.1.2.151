@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -22,6 +24,7 @@ import com.templateonetwo.testingtemplateonetwo.SettingsPackage.EditProfileFragm
 import com.templateonetwo.testingtemplateonetwo.SettingsPackage.InviteFriendsFragment;
 import com.templateonetwo.testingtemplateonetwo.SettingsPackage.NotificationsFragment;
 import com.templateonetwo.testingtemplateonetwo.SettingsPackage.PaymentFragment;
+import com.templateonetwo.testingtemplateonetwo.SettingsPackage.SettingsMenuFragment;
 import com.templateonetwo.testingtemplateonetwo.SettingsPackage.SignOutFragment;
 import com.templateonetwo.testingtemplateonetwo.Utils.SectionsPagerAdapter;
 import com.templateonetwo.testingtemplateonetwo.Utils.SectionsStatePagerAdapter;
@@ -44,8 +47,8 @@ public class Activity_Settings extends AppCompatActivity {
         setContentView(R.layout.layout_settings);
         Log.d(TAG, "onCreate: started.");
      // TextView settings_title = (TextView) findViewById(R.id.activityTitle_Settings);
-        mViewPager = (ViewPager) findViewById(R.id.settingscontainer);
-        mRelativeLayout = (RelativeLayout) findViewById(R.id.relLayout1); //* may need to Change THIS*//
+       // mViewPager = (ViewPager) findViewById(R.id.settingscontainer);
+        //mRelativeLayout = (RelativeLayout) findViewById(R.id.relLayout1); //* may need to Change THIS*//
 
      /* setting up ellipses profile menu "ellipses",
         not setting up tool bar 14:18 (Account Setting Layout Part 10 - Instagram Clone)*/
@@ -115,39 +118,28 @@ public class Activity_Settings extends AppCompatActivity {
         //*Need to commit this method nested inside of onCreate, otherwise won't show up*/
         setupSettingList();
         //*Need to commit this method nested inside of onCreate, otherwise won't show up for fragments*/
-        setupFragments();
+        //setupFragments();
     }
 
     /////Setting up Listview in setting //////
     private void setupSettingList(){
 
-        Log.d(TAG, "setupSettingList: initilizign 'Account Settings' list.");
-        ListView listView = (ListView) findViewById(R.id.lvAccountSettings);
 
-        ArrayList<String> options = new ArrayList<>();
-        options.add(getString(R.string.edit_profile_fragment)); /*i.e. fragment (0)*/
-        options.add(getString(R.string.notifications_fragment)); /*i.e. fragment (1)*/
-        options.add(getString(R.string.invite_friend_fragment)); /*i.e. fragment (2)*/
-        options.add(getString(R.string.edit_payment_method_fragment)); /*i.e. fragment (3)*/
-        options.add(getString(R.string.sign_out_fragment)); /*i.e. fragment (4)*/
+                Fragment fragment=new SettingsMenuFragment();
+                FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();
 
-        ArrayAdapter adapterforSettingList = new ArrayAdapter(mContext, android.R.layout.simple_list_item_1, options);
-        listView.setAdapter(adapterforSettingList);
-
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.d(TAG, "onItemClick: navigating to fragment#: " + position);
-                setViewPager(position);
+                fragmentTransaction.replace(R.id.relLayoutMiddle,fragment,fragment.getClass().getName());
+                fragmentTransaction.addToBackStack(fragment.getClass().getName());
+                fragmentTransaction.commit();
+                //setViewPager(position);
 
 
             }
-        });
 
 
 
-    }
+
+
 
     private void setupFragments(){
         /*Change which fragment shows up after .addFragment in the parameters,

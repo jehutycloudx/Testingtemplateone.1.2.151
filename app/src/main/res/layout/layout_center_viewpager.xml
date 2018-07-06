@@ -2,8 +2,8 @@
 
 
     <RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="0dp"
+    android:layout_height="0dp">
 
     <!-- This layout is just used as a container to assist in fragment creation in other
      layouts-->

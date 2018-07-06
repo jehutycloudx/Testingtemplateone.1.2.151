@@ -24,13 +24,20 @@ import android.view.View;
 import android.widget.Adapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.templateonetwo.testingtemplateonetwo.Login.LoginActivity;
 import com.templateonetwo.testingtemplateonetwo.Utils.CommonUtils;
 import com.templateonetwo.testingtemplateonetwo.Utils.FragmentModelDataPasssing;
 import com.templateonetwo.testingtemplateonetwo.Utils.FragmentdataPass;
 import com.templateonetwo.testingtemplateonetwo.Utils.SectionsPagerAdapter;
 import com.templateonetwo.testingtemplateonetwo.Utils.SectionsStatePagerAdapter;
+import com.templateonetwo.testingtemplateonetwo.Utils.SessionManager;
 import com.templateonetwo.testingtemplateonetwo.Utils.UniversalImageLoader;
 
 
@@ -51,6 +58,11 @@ public  class MainActivity extends AppCompatActivity implements Fragment1.OnPhot
     Bitmap mBitmap;
     String mString;
 
+    protected DatabaseReference mDatabase;
+    protected FirebaseUser firebaseUser;
+    public FirebaseAuth firebaseAuth;
+    SessionManager mSessionManager;
+
     private SectionsStatePagerAdapter mSectionsStatePagerAdapter;
     private ViewPager mViewPager; /*created in activity main XML all the way at the bottom*/
 
@@ -59,6 +71,24 @@ public  class MainActivity extends AppCompatActivity implements Fragment1.OnPhot
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.d(TAG, "onCreate: Started.");
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        mSessionManager=SessionManager.NewInstance(this);
+
+        if(!firebaseUser.isEmailVerified())
+        {
+            Toast.makeText(mContext, "Email is not verified. Logging out", Toast.LENGTH_SHORT).show();
+            firebaseAuth.signOut();
+            mSessionManager.setLogin(false);
+            mSessionManager.saveProfileData(this,null);
+            Intent i = new Intent(this, LoginActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(i);
+            finish();
+        }
+
 
         mToolbarTitle = findViewById(R.id.profilenameTitletoolbar);
 
