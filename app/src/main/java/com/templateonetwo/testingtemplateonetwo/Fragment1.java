@@ -262,6 +262,7 @@ public class Fragment1 extends android.support.v4.app.Fragment {
 
             if (mOnPhotoSelectedLister != null || mOnVideoSelectedLister !=null)
             mOnPhotoSelectedLister.getImageBitmap(bitmap);
+            mOnPhotoSelectedLister.getImagePath(selectedImageUri);
            // mOnVideoSelectedLister.getVideopath(selectedImageUri);
             MainActivity mainActivity=(MainActivity)getActivity();
             mainActivity.gotoFragment(4);

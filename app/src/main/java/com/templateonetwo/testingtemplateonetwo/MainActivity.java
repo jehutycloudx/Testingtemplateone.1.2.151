@@ -77,7 +77,8 @@ public  class MainActivity extends AppCompatActivity implements Fragment1.OnPhot
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         mSessionManager=SessionManager.NewInstance(this);
 
-        if(!firebaseUser.isEmailVerified())
+        if(!
+                firebaseUser.isEmailVerified())
         {
             Toast.makeText(mContext, "Email is not verified. Logging out", Toast.LENGTH_SHORT).show();
             firebaseAuth.signOut();

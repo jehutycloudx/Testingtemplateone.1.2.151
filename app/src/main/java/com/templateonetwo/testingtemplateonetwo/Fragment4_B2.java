@@ -35,6 +35,7 @@ import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.templateonetwo.testingtemplateonetwo.Models.ConsumerPostModel;
 import com.templateonetwo.testingtemplateonetwo.Utils.CommonUtils;
 import com.templateonetwo.testingtemplateonetwo.Utils.FragmentModelDataPasssing;
 
@@ -56,6 +57,7 @@ public class Fragment4_B2 extends android.support.v4.app.Fragment implements Fra
     private Button btnNexttoReview; //getAddress;
     private ImageView getAddress;
     EditText mLocation;
+    ConsumerPostModel mConsumerPostModel;
 
 
     public Switch mSwitch;

@@ -16,19 +16,42 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.templateonetwo.testingtemplateonetwo.Models.ConsumerPostModel;
+import com.templateonetwo.testingtemplateonetwo.Models.UserModel;
 import com.templateonetwo.testingtemplateonetwo.Utils.CommonUtils;
 import com.templateonetwo.testingtemplateonetwo.Utils.FragmentDataReceive;
 import com.templateonetwo.testingtemplateonetwo.Utils.FragmentModelDataPasssing;
+import com.templateonetwo.testingtemplateonetwo.Utils.SessionManager;
+
+import java.io.ByteArrayOutputStream;
+import java.util.HashMap;
 
 import static android.text.TextUtils.isEmpty;
 
 public class Fragment4_B3 extends android.support.v4.app.Fragment implements Fragment1.OnVideoSelectedLister, Fragment1.OnPhotoSelectedLister, AdapterView.OnItemSelectedListener, Fragment4_B1.OnProjectTitleSetListener,FragmentDataReceive {
 
 
-
+    protected FirebaseStorage storage;
+    //change the url according to your firebase app
+    protected StorageReference storageRef;
+    // ...creating refreence to firebase database
+    protected DatabaseReference mDatabase;
     private static final String Tag4b3 = "Fragment4_B3";
     private Button btnbacktoNavFrag4b2;
     private Button btnPost;
+    ConsumerPostModel mConsumerPostModel;
+    UserModel mUserModel;
+    SessionManager mSessionManager;
 
     public TextView mTimefield3;
     public TextView mDatefield3;
@@ -44,6 +67,7 @@ public class Fragment4_B3 extends android.support.v4.app.Fragment implements Fra
     private Bitmap m3Bitmap;
 
     private String mIncomingMessage_ProjectTitle = "";
+
 
 
       public Fragment4_B3() {}
@@ -62,19 +86,86 @@ public class Fragment4_B3 extends android.support.v4.app.Fragment implements Fra
      Deleted the 'super return...' code line */
 
     //4:28 Classifieds: Compressing images in Android
-    private void uploadNewphoto(Uri Viduri){
+
+
+    private void uploadNewphoto(Bitmap bmp){
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+      //  mDatabase.child("posts").child(mUserModel.getUserKey()).child(mDatabase.push().getKey()).setValue(mConsumerPostModel);
+        final StorageReference childRef = storageRef.child(mUserModel.getUserKey()).child("photo").child(mDatabase.push().getKey());
+        UploadTask uploadTask = childRef.putBytes(byteArray);
+        Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+            @Override
+            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                if (!task.isSuccessful()) {
+                    throw task.getException();
+                }
+
+
+              return childRef.getDownloadUrl();
+            }
+        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                if (task.isSuccessful()) {
+                    Uri downloadUri = task.getResult();
+                    mConsumerPostModel.photoUrl=downloadUri.toString();
+                    mDatabase.child("posts").child(mUserModel.getUserKey()).child(mDatabase.push().getKey()).setValue(mConsumerPostModel);
+                    Toast.makeText(getActivity(), "Post Uploaded Successfully", Toast.LENGTH_SHORT).show();
+                } else {
+
+                }
+            }
+        });
+
+
 
     }
 
-    private void uploadNewphoto(Bitmap bitmap){
+    void uploadNewVideo(Uri videoUri)
+    {
+
+        //  mDatabase.child("posts").child(mUserModel.getUserKey()).child(mDatabase.push().getKey()).setValue(mConsumerPostModel);
+        final StorageReference childRef = storageRef.child(mUserModel.getUserKey()).child("video").child(mDatabase.push().getKey());
+        UploadTask uploadTask = childRef.putFile(videoUri);
+        Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+            @Override
+            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                if (!task.isSuccessful()) {
+                    throw task.getException();
+                }
+
+
+                return childRef.getDownloadUrl();
+            }
+        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                if (task.isSuccessful()) {
+                    Uri downloadUri = task.getResult();
+                    mConsumerPostModel.videoUrl=downloadUri.toString();
+                    mDatabase.child("posts").child(mUserModel.getUserKey()).child(mDatabase.push().getKey()).setValue(mConsumerPostModel);
+                    Toast.makeText(getActivity(), "Post Uploaded Successfully", Toast.LENGTH_SHORT).show();
+                } else {
+
+                }
+            }
+        });
+
+
 
     }
+
+
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment4_b3_layout_video_path, container, false);
-
+        mSessionManager=SessionManager.NewInstance(getActivity());
+        mUserModel=mSessionManager.getProfileData(getActivity());
         mProjecttitle3 = (TextView) view.findViewById(R.id.titleProjectName3);
         mDescription3 = (TextView) view.findViewById(R.id.title_field3);
 
@@ -86,6 +177,15 @@ public class Fragment4_B3 extends android.support.v4.app.Fragment implements Fra
 
         btnbacktoNavFrag4b2 = (Button) view.findViewById(R.id.btnbackto4b2);
         btnPost = (Button) view.findViewById(R.id.btnPost);
+
+
+        storage = FirebaseStorage.getInstance();
+        storageRef = storage.getReference();
+
+
+        //Databse Intialization...
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
 
 
         Log.d(Tag4b3, "onCreateView: started.");
@@ -118,13 +218,21 @@ public class Fragment4_B3 extends android.support.v4.app.Fragment implements Fra
                    && !isEmpty(mTimefield3.getText().toString())) {
 
                     //we have a Uri and no bitmap
-                if(result_video != null && secondimage == null){
-                    uploadNewphoto(setVideopath());
+                    Fragment1.OnPhotoSelectedLister onPhotoSelectedLister = (Fragment1.OnPhotoSelectedLister) getActivity();
+                    Fragment1.OnVideoSelectedLister onVideoSelectedLister = (Fragment1.OnVideoSelectedLister) getActivity();
+
+                    if (onVideoSelectedLister.setVideopath() == null)
+                    {
+
+
+                    uploadNewphoto(onPhotoSelectedLister.setImageBitmap());
+
+
 
                 }
                 //we have no Uri and a bitmap
-                else if (result_video == null && secondimage !=null) {
-                    uploadNewphoto(setImagePath());
+                else  {
+                    uploadNewVideo(onVideoSelectedLister.setVideopath());
                     /*setVideopath and setImagePath may need to be fixed
                     as they may not refer to the right data being stored for
                     transfer*/
@@ -155,11 +263,12 @@ public class Fragment4_B3 extends android.support.v4.app.Fragment implements Fra
         secondimage = (ImageView) view.findViewById(R.id.imageView3);
 
         Fragment1.OnPhotoSelectedLister onPhotoSelectedLister = (Fragment1.OnPhotoSelectedLister) getActivity();
-        final Fragment1.OnVideoSelectedLister onVideoSelectedLister = (Fragment1.OnVideoSelectedLister) getActivity();
+         Fragment1.OnVideoSelectedLister onVideoSelectedLister = (Fragment1.OnVideoSelectedLister) getActivity();
 
         if (onVideoSelectedLister.setVideopath() == null)
             //  bitmapthumbnail.setImageBitmap(onPhotoSelectedLister.setImageBitmap());
             secondimage.setImageBitmap(onPhotoSelectedLister.setImageBitmap());
+
 
 
         else  {
@@ -181,6 +290,8 @@ public class Fragment4_B3 extends android.support.v4.app.Fragment implements Fra
 
             }
         });
+
+
 
 //        setIncomingMessage_ProjectTitle();
         /* */////////////////////////////
@@ -312,6 +423,17 @@ public class Fragment4_B3 extends android.support.v4.app.Fragment implements Fra
             mDatefield3.setText(fragmentModelDataPasssing.getDate());
             mLocationfield3.setText(fragmentModelDataPasssing.getLocation());
             mTimefield3.setText(fragmentModelDataPasssing.getTime());
+
+            mConsumerPostModel=new ConsumerPostModel();
+            mConsumerPostModel.category=fragmentModelDataPasssing.getCategory();
+            mConsumerPostModel.date=fragmentModelDataPasssing.getDate();
+            mConsumerPostModel.description=fragmentModelDataPasssing.getDescription();
+            mConsumerPostModel.location=fragmentModelDataPasssing.getLocation();
+            mConsumerPostModel.time=fragmentModelDataPasssing.getTime();
+            mConsumerPostModel.projectTitle=fragmentModelDataPasssing.getTitle();
+            mConsumerPostModel.specific=fragmentModelDataPasssing.getSwitchValue();
+
+
          // mSwitch3.setText(fragmentModelDataPasssing.getSwitchValue());
         }
     }
