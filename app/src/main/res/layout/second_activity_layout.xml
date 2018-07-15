@@ -7,12 +7,20 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:text="@string/this_is_the_second_activity_layout"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
         android:gravity="center"
-        android:textSize="25sp" />
+        android:text="@string/this_is_the_second_activity_layout"
+        android:textSize="18sp" />
 
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="@string/this_is_the_service_provide_portal"
+        android:textSize="24sp" />
 
 
 </RelativeLayout>

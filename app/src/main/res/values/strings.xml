@@ -39,4 +39,5 @@
     <string name="edit_payment_method_fragment">Payment Method</string>
     <string name="invite_friend_fragment">Invite a Friend</string>
     <string name="notifications_fragment">Notifications</string>
+    <string name="this_is_the_service_provide_portal">This is the Service Provide Portal</string>
 </resources>

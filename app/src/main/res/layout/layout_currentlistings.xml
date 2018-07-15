@@ -27,6 +27,9 @@
             android:id="@+id/relLayoutMiddle"
             android:layout_below="@id/relLayoutTopBar"
             android:layout_above="@id/relLayoutBotBar">
+            <include layout="@layout/layout_customerlistings_center_viewpager"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"></include>
 
             <TextView
                 android:layout_width="match_parent"

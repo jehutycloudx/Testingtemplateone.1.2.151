@@ -5,12 +5,18 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
+import com.templateonetwo.testingtemplateonetwo.Utils.SectionsPagerAdapter;
+
 public class Activity_Current_Listings extends AppCompatActivity {
+    ViewPager mViewPager;
+    android.support.design.widget.TabLayout mTabLayout;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +72,17 @@ public class Activity_Current_Listings extends AppCompatActivity {
                 return false;
             }
         });
+
+        setUpPagerTabs();
+
+    }
+
+    void setUpPagerTabs()
+    {
+        mViewPager=findViewById(R.id.customerListingscontainer);
+        mViewPager.setAdapter(new SectionsPagerAdapter(getSupportFragmentManager(),this));
+        mTabLayout=findViewById(R.id.sliding_tabs);
+        mTabLayout.setupWithViewPager(mViewPager);
 
     }
 }

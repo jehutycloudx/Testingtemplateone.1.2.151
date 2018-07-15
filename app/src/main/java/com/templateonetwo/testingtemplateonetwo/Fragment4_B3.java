@@ -111,6 +111,7 @@ public class Fragment4_B3 extends android.support.v4.app.Fragment implements Fra
                 if (task.isSuccessful()) {
                     Uri downloadUri = task.getResult();
                     mConsumerPostModel.photoUrl=downloadUri.toString();
+                    mConsumerPostModel.videoUrl="";
                     mDatabase.child("posts").child(mUserModel.getUserKey()).child(mDatabase.push().getKey()).setValue(mConsumerPostModel);
                     Toast.makeText(getActivity(), "Post Uploaded Successfully", Toast.LENGTH_SHORT).show();
                 } else {
@@ -145,6 +146,7 @@ public class Fragment4_B3 extends android.support.v4.app.Fragment implements Fra
                 if (task.isSuccessful()) {
                     Uri downloadUri = task.getResult();
                     mConsumerPostModel.videoUrl=downloadUri.toString();
+                    mConsumerPostModel.photoUrl="";
                     mDatabase.child("posts").child(mUserModel.getUserKey()).child(mDatabase.push().getKey()).setValue(mConsumerPostModel);
                     Toast.makeText(getActivity(), "Post Uploaded Successfully", Toast.LENGTH_SHORT).show();
                 } else {

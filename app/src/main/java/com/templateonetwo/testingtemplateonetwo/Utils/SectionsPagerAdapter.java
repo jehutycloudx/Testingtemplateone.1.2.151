@@ -1,9 +1,12 @@
 package com.templateonetwo.testingtemplateonetwo.Utils;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.FragmentPagerAdapter;
+
+import com.templateonetwo.testingtemplateonetwo.CustomerListingFragment.BidsFragment;
+import com.templateonetwo.testingtemplateonetwo.CustomerListingFragment.CustomerCurrentListingsFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,18 +26,44 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     private static final String TAG = "SectionPagerAdapter";
     private final List<Fragment> mFragmentList = new ArrayList<>();
+    final int PAGE_COUNT = 2;
+    private String tabTitles[] = new String[] { "Current Listings", "Bids" };
+    private Context context;
 
-    public SectionsPagerAdapter(FragmentManager fm) {super(fm);}
+    public SectionsPagerAdapter(FragmentManager fm,Context context) {
+        super(fm);
+        this.context=context;
+
+    }
 
     @Override
     public Fragment getItem(int position) {
-        return mFragmentList.get(position);
+        Fragment fragment=new CustomerCurrentListingsFragment();
+       switch (position)
+       {
+           case 0:
+               fragment=new CustomerCurrentListingsFragment();
+               break;
+           case 1:
+               fragment=new BidsFragment();
+               break;
+       }
+       return fragment;
     }
 
     @Override
     public int getCount() {
-        return mFragmentList.size();
+        return PAGE_COUNT;
     }
 
-    public void addFragment (Fragment fragment) {mFragmentList.add(fragment);}
+    public void addFragment (Fragment fragment) {
+        mFragmentList.add(fragment);
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        // Generate title based on item position
+        return tabTitles[position];
+    }
+
 }
