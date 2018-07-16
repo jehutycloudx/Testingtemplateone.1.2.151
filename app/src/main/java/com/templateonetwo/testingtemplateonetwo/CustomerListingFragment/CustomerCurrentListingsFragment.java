@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -55,9 +56,18 @@ public class CustomerCurrentListingsFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(layoutManager);
         mCustomerCurrentListingsAdapter=new CustomerCurrentListingsAdapter(mConsumerPostModelArrayList, getActivity(),
+
                 new OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
+                        Fragment fragment=new CustomerListingDetailFragment();
+                        Bundle bundle=new Bundle();
+                        bundle.putSerializable("post",mConsumerPostModelArrayList.get(position));
+                        fragment.setArguments(bundle);
+                        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                        ft.replace(R.id.relLayoutMiddle,fragment,fragment.getClass().getName());
+                        ft.addToBackStack(fragment.getClass().getName());
+                        ft.commit();
 
                     }
                 });
@@ -80,6 +90,7 @@ public class CustomerCurrentListingsFragment extends Fragment {
                     for(DataSnapshot children:childSnap.getChildren())
                     {
                         ConsumerPostModel consumerPostModel=children.getValue(ConsumerPostModel.class);
+                        consumerPostModel.setUniqueId(children.getKey());
                         mConsumerPostModelArrayList.add(consumerPostModel);
                     }
 

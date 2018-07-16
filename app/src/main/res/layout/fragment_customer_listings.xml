@@ -25,7 +25,7 @@
         android:layout_width="match_parent"
         android:layout_centerInParent="true"
         android:id="@+id/error"
-        android:text="No Data exists"
+        android:text="No Posts Made"
         android:gravity="center"
         android:textAppearance="?android:textAppearanceLarge"
         android:visibility="gone"

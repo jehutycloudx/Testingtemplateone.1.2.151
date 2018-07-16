@@ -35,7 +35,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/activityTitle_Current_Listings"
-                android:text="@string/current_listings_placeholder"
                 android:gravity="center"
                 />
 

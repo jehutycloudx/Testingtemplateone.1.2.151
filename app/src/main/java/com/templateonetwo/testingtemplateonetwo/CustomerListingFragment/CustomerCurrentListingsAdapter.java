@@ -2,6 +2,7 @@ package com.templateonetwo.testingtemplateonetwo.CustomerListingFragment;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.templateonetwo.testingtemplateonetwo.Models.ConsumerPostModel;
 import com.templateonetwo.testingtemplateonetwo.R;
 import com.templateonetwo.testingtemplateonetwo.Utils.OnItemClickListener;
@@ -51,6 +54,18 @@ public class CustomerCurrentListingsAdapter extends
       holder.messages.setText("messages");
       holder.date.setText(mConsumerPostModelArrayList.get(position).getDate());
       holder.projectTitle.setText(mConsumerPostModelArrayList.get(position).getProjectTitle());
+      holder.uniqueId.setText(mConsumerPostModelArrayList.get(position).getUniqueId());
+        ImageLoader imageLoader = ImageLoader.getInstance();
+        String imageUri=mConsumerPostModelArrayList.get(position).getPhotoUrl();
+        if(imageUri!=null) {
+            imageLoader.displayImage(imageUri, holder.leftImage);
+        }
+        else
+        {
+            imageUri=mConsumerPostModelArrayList.get(position).getVideoUrl();
+            if(imageUri!=null)
+            imageLoader.displayImage(imageUri, holder.leftImage);
+        }
      // holder.bids
       //holder.uniqueId.setText(mConsumerPostModelArrayList.get(position).get);
 
@@ -82,6 +97,7 @@ public class CustomerCurrentListingsAdapter extends
 
             leftImage=itemView.findViewById(R.id.image);
             edit=itemView.findViewById(R.id.edit);
+            itemView.setOnClickListener(this);
         }
 
         @Override

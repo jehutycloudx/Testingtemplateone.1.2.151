@@ -1,7 +1,17 @@
 package com.templateonetwo.testingtemplateonetwo.Models;
 
-public class ConsumerPostModel {
-  public   String userId,projectTitle,description,category,specific,date,time,location,photoUrl,videoUrl;
+import java.io.Serializable;
+
+public class ConsumerPostModel implements Serializable{
+  public   String userId,projectTitle,description,category,specific,date,time,location,photoUrl,videoUrl,uniqueId;
+
+  public String getUniqueId() {
+    return uniqueId;
+  }
+
+  public void setUniqueId(String uniqueId) {
+    this.uniqueId = uniqueId;
+  }
 
   public String getUserId() {
     return userId;

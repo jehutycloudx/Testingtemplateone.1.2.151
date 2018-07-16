@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colorWhite"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="209dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:tag="fragment4b3tag"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.024">
+
+        <VideoView
+            android:id="@+id/videoView3"
+            android:layout_width="291dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center_horizontal" />
+
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="250dp"
+            android:layout_height="200dp"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginRight="18dp"
+            android:layout_marginTop="15dp"
+            />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="21dp"
+            android:layout_height="21dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/videoView3"
+            app:srcCompat="@drawable/ic_media_play_dark"
+            android:layout_alignLeft="@+id/videoView3" />
+
+        <!-- Do you need Glide or Universal Imageloader to properly display pics? -->
+        <!-- take a picture results in grainy quality and wrong aspect ratio no matter how much adjustment in XML-->
+    </RelativeLayout>
+
+
+
+
+
+
+
+
+
+
+    <RelativeLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="140dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.58">
+
+        <TextView
+            android:id="@+id/titleProjectName"
+            android:layout_width="wrap_content"
+            android:layout_height="19dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="10dp"
+            android:text="Project Title:"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
+        <EditText
+            android:id="@+id/titleProjectName3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="horizontal"
+            android:hint="Project Title text"
+            android:inputType="textMultiLine"
+            android:layout_marginTop="18dp"
+            android:layout_alignTop="@+id/titleProjectName"
+            />
+
+        <EditText
+            android:id="@+id/textViewDescription3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/titleProjectName3"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="70dp"
+            android:inputType="textMultiLine"
+            android:text="Description:"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+
+            />
+
+        <TextView
+            android:id="@+id/title_field3"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:layout_marginTop="65dp"
+            android:hint="Description text" />
+
+
+    </RelativeLayout>
+
+
+    <Button
+        android:id="@+id/btnPost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:text="Post!"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.853"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnbackto4b2"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="100dp"
+        android:text="@string/back_to_media_select"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnPost"
+        app:layout_constraintHorizontal_bias="0.264"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
+        app:layout_constraintVertical_bias="0.0" />
+
+
+    <RelativeLayout
+        android:id="@+id/BottomHorozRellayout2"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginBottom="68dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/categoryTitle"
+            android:layout_width="119dp"
+            android:layout_height="19dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:gravity="left"
+            android:text="@string/category"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
+
+        <TextView
+            android:id="@+id/DateTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="175dp"
+            android:gravity="start"
+            android:text="Date:"
+            app:layout_constraintTop_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/CategoryPostText"
+            android:layout_width="154dp"
+            android:layout_height="19dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="17dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintTop_toBottomOf="@id/categoryTitle" />
+
+        <TextView
+            android:id="@+id/DatePostText"
+            android:layout_width="70dp"
+            android:layout_height="19dp"
+            android:layout_toRightOf="@id/CategoryPostText"
+            android:layout_toEndOf="@id/CategoryPostText"
+            android:layout_marginTop="17dp"
+            android:layout_marginLeft="7dp"
+            android:gravity="left"
+            >
+
+        </TextView>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/BottomHorozRellayout1"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginBottom="122dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+        <TextView
+            android:id="@+id/LocationTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="19dp"
+
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:gravity="left"
+            android:text="Location:"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/timeTitle"
+            android:layout_width="49dp"
+            android:layout_height="19dp"
+
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="108dp"
+            android:layout_toEndOf="@id/LocationTitle"
+            android:layout_toRightOf="@id/LocationTitle"
+            android:gravity="left"
+            android:text="Time:" />
+
+
+        <TextView
+            android:id="@+id/LocationPostText"
+            android:layout_width="wrap_content"
+            android:layout_height="52dp"
+            android:layout_marginLeft="8dp"
+            android:ems="10"
+            android:layout_marginTop="17dp"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/TimePostText"
+            android:layout_width="65dp"
+            android:layout_height="19dp"
+            android:layout_toRightOf="@id/LocationPostText"
+            android:layout_marginTop="17dp"
+            android:ems="10"
+            android:gravity="left"
+            />
+
+        <TextView
+            android:id="@+id/SwitchValuefrag3"
+            android:layout_width="60dp"
+            android:layout_height="19dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="55dp"
+            app:layout_constraintVertical_bias="0.0" />
+
+    </RelativeLayout>
+
+
+</android.support.constraint.ConstraintLayout>
+
